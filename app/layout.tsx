@@ -5,37 +5,35 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Deafine - Empowering the Deaf Community',
-  description: 'A comprehensive platform designed to support deaf individuals in finding employment, learning new skills, and maintaining mental wellness through accessible technology.',
-  keywords: 'deaf community, accessibility, jobs, mental health, speech to text, workshops, sign language',
-  authors: [{ name: 'Deafine Team' }],
-  creator: 'Deafine',
-  publisher: 'Deafine',
+  title: 'Lestari - Portal Inklusif',
+  description: 'A comprehensive platform designed to support individuals in finding employment, learning new skills, and maintaining mental wellness through accessible technology.',
+  keywords: 'accessibility, jobs, mental health, speech to text, workshops',
+  authors: [{ name: 'Lestari Team' }],
+  creator: 'Lestari',
+  publisher: 'Lestari',
   robots: 'index, follow',
-  viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#6366f1',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://Deafine.app',
-    title: 'Deafine - Empowering the Deaf Community',
-    description: 'A comprehensive platform designed to support deaf individuals in finding employment, learning new skills, and maintaining mental wellness through accessible technology.',
-    siteName: 'Deafine',
+    url: 'https://Lestari.app',
+    title: 'Lestari - Portal Inklusif',
+    description: 'A comprehensive platform designed to support individuals in finding employment, learning new skills, and maintaining mental wellness through accessible technology.',
+    siteName: 'Lestari',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Deafine - Empowering the Deaf Community',
+        alt: 'Lestari - Portal Inklusif',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Deafine - Empowering the Deaf Community',
-    description: 'A comprehensive platform designed to support deaf individuals in finding employment, learning new skills, and maintaining mental wellness through accessible technology.',
+    title: 'Lestari - Portal Inklusif',
+    description: 'A comprehensive platform designed to support individuals in finding employment, learning new skills, and maintaining mental wellness through accessible technology.',
     images: ['/og-image.jpg'],
-    creator: '@Deafineapp',
+    creator: '@Lestariapp',
   },
   icons: {
     icon: '/favicon.ico',
@@ -43,6 +41,12 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
   manifest: '/manifest.json',
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#6366f1',
 }
 
 export default function RootLayout({
@@ -62,10 +66,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         
         {/* Additional meta tags for better SEO */}
-        <meta name="application-name" content="Deafine" />
+        <meta name="application-name" content="Lestari" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Deafine" />
+        <meta name="apple-mobile-web-app-title" content="Lestari" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#6366f1" />
         <meta name="msapplication-tap-highlight" content="no" />
@@ -77,13 +81,12 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebApplication',
-              name: 'Deafine',
-              description: 'A comprehensive platform designed to support deaf individuals in finding employment, learning new skills, and maintaining mental wellness through accessible technology.',
-              url: 'https://Deafine.app',
+              name: 'Lestari',
+              description: 'A comprehensive platform designed to support individuals in finding employment, learning new skills, and maintaining mental wellness through accessible technology.',
+              url: 'https://Lestari.app',
               applicationCategory: 'EducationalApplication',
               operatingSystem: 'Web',
               accessibilityFeature: [
-                'signLanguageInterpretation',
                 'visualContent',
                 'textAlternatives',
                 'closedCaptions'
@@ -101,7 +104,7 @@ export default function RootLayout({
               },
               author: {
                 '@type': 'Organization',
-                name: 'Deafine Team'
+                name: 'Lestari Team'
               }
             })
           }}
@@ -209,7 +212,6 @@ export default function RootLayout({
               // Error handling for better UX
               window.addEventListener('error', function(e) {
                 console.error('Application error:', e.error);
-                // Could implement user-friendly error notifications here
               });
               
               // Online/offline status handling
