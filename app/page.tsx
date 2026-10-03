@@ -28,52 +28,63 @@ export default function Page() {
     setIsAuthenticated(true);
   };
 
-  // Tampilan Login dengan Nuansa Warna-Warni / Colorful yang Ceria
+  // Tampilan Login dengan Logo Asli & Bahasa Inggris
   if (!isAuthenticated) {
     return (
-      <main className="min-h-screen bg-gradient-to-tr from-pink-50 via-purple-50 to-indigo-100 flex items-center justify-center px-4 relative overflow-hidden">
-        {/* Aksen Bola Warna-Warni di Background */}
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-pink-400/20 rounded-full blur-3xl pointer-events-none"></div>
+      <main className="min-h-screen bg-[#EEF2FF] flex items-center justify-center px-4 relative overflow-hidden">
+        {/* Aksen Latar Belakang */}
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#A5B4FC]/40 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#D8B4FE]/40 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="w-full max-w-md bg-white/90 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/50 relative z-10">
-          <div className="text-center mb-8">
-            {/* Badge Warna-Warni */}
-            <span className="inline-block bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-md uppercase tracking-wider">
-              Lestari
-            </span>
-            <h1 className="text-2xl font-extrabold text-gray-900 mt-4">Selamat Datang!</h1>
-            <p className="text-sm text-gray-600 mt-1">Masuk untuk menjelajahi portal inklusif kami</p>
+        <div className="w-full max-w-md bg-white rounded-3xl p-8 shadow-xl border border-[#C7D2FE]/50 relative z-10">
+          <div className="text-center mb-8 flex flex-col items-center">
+            {/* Logo Resmi LESTARI */}
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-tr from-[#6366F1] to-[#9333EA] rounded-xl flex items-center justify-center shadow-md">
+                {/* SVG Ikon Telinga Dicoret */}
+                <svg className="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 8.5a6.5 6.5 0 0 1 11.53-3.08" />
+                  <path d="M18.42 12.5A6.5 6.5 0 0 1 10.5 19.5h-1a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2h1a2 2 0 0 0 2-2v-.5" />
+                  <line x1="2" y1="2" x2="22" y2="22" />
+                </svg>
+              </div>
+              <span className="text-2xl font-black tracking-wider bg-gradient-to-r from-[#6366F1] to-[#9333EA] bg-clip-text text-transparent">
+                LESTARI
+              </span>
+            </div>
+            
+            <h1 className="text-2xl font-extrabold text-[#374151]">Welcome!</h1>
+            <p className="text-sm text-[#4B5563] mt-1">Sign in to explore our inclusive portal</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
+              <label className="block text-sm font-semibold text-[#374151] mb-1.5">Email Address</label>
               <input 
                 type="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm bg-gray-50/50 focus:bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition"
-                placeholder="nama@email.com"
+                className="w-full rounded-xl border border-[#D1D5DB] px-4 py-3 text-sm bg-[#F3F4F6] text-[#374151] focus:bg-white focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]/20 focus:outline-none transition"
+                placeholder="name@email.com"
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
+              <label className="block text-sm font-semibold text-[#374151] mb-1.5">Password</label>
               <input 
                 type="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm bg-gray-50/50 focus:bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 focus:outline-none transition"
+                className="w-full rounded-xl border border-[#D1D5DB] px-4 py-3 text-sm bg-[#F3F4F6] text-[#374151] focus:bg-white focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]/20 focus:outline-none transition"
                 placeholder="••••••••"
               />
             </div>
             <button 
               type="submit"
-              className="w-full rounded-xl bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 py-3.5 text-white font-bold shadow-lg shadow-purple-500/30 hover:opacity-95 transition transform active:scale-[0.98]"
+              className="w-full rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] py-3.5 text-white font-bold shadow-lg shadow-[#4F46E5]/25 transition transform active:scale-[0.98]"
             >
-              Masuk ke Portal
+              Sign In to Portal
             </button>
           </form>
         </div>
@@ -97,7 +108,7 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-[#EEF2FF]">
       <Header currentPage={currentPage} setCurrentPage={setCurrentPage} features={features} />
       
       <div className="max-w-7xl mx-auto px-4 pt-4 flex justify-end">
@@ -106,9 +117,9 @@ export default function Page() {
             localStorage.removeItem('isAuthenticated');
             setIsAuthenticated(false);
           }}
-          className="text-xs bg-red-100 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg font-medium hover:bg-red-200 transition shadow-sm"
+          className="text-xs bg-[#FEE2E2] text-[#DC2626] border border-[#FCA5A5] px-3 py-1.5 rounded-lg font-medium hover:bg-[#FCA5A5]/30 transition shadow-sm"
         >
-          Logout Akun
+          Logout Account
         </button>
       </div>
 
