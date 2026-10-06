@@ -4,7 +4,6 @@ import {
   ArrowRight, 
   Play, 
   Video, 
-  MessageSquare, 
   FileText, 
   Volume2, 
   Briefcase, 
@@ -13,12 +12,7 @@ import {
   Mic, 
   ShieldCheck, 
   Globe, 
-  Star,
-  CheckCircle2,
-  Award,
-  Users,
-  TrendingUp,
-  Building
+  Star
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -60,7 +54,7 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button 
             onClick={() => setCurrentPage('job-portal')}
-            className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl shadow-lg shadow-purple-500/25 hover:opacity-95 transition flex items-center justify-center space-x-2 group"
+            className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl shadow-lg shadow-purple-500/25 hover:opacity-95 transition flex items-center justify-center space-x-2 group cursor-pointer"
           >
             <span>Start Your Journey</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -68,7 +62,7 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
           
           <button 
             onClick={() => alert("Demo video coming soon!")}
-            className="w-full sm:w-auto px-8 py-4 bg-white border border-gray-200 text-gray-700 font-bold rounded-2xl shadow-sm hover:bg-gray-50 transition flex items-center justify-center space-x-2"
+            className="w-full sm:w-auto px-8 py-4 bg-white border border-gray-200 text-gray-700 font-bold rounded-2xl shadow-sm hover:bg-gray-50 transition flex items-center justify-center space-x-2 cursor-pointer"
           >
             <div className="w-7 h-7 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600">
               <Play className="w-3.5 h-3.5 fill-current" />
@@ -87,7 +81,6 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Card 1 */}
             <div className="bg-white p-6 rounded-2xl border border-indigo-50 shadow-sm hover:shadow-md transition">
               <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 mb-4">
                 <Video className="w-6 h-6" />
@@ -98,7 +91,6 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               </p>
             </div>
 
-            {/* Card 2 */}
             <div className="bg-white p-6 rounded-2xl border border-indigo-50 shadow-sm hover:shadow-md transition">
               <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 mb-4">
                 <Sparkles className="w-6 h-6" />
@@ -109,7 +101,6 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               </p>
             </div>
 
-            {/* Card 3 */}
             <div className="bg-white p-6 rounded-2xl border border-indigo-50 shadow-sm hover:shadow-md transition">
               <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 mb-4">
                 <FileText className="w-6 h-6" />
@@ -120,7 +111,6 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               </p>
             </div>
 
-            {/* Card 4 */}
             <div className="bg-white p-6 rounded-2xl border border-indigo-50 shadow-sm hover:shadow-md transition">
               <div className="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600 mb-4">
                 <Volume2 className="w-6 h-6" />
@@ -134,91 +124,91 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
         </div>
       </section>
 
-      {/* 3. PLATFORM FEATURES */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+      {/* 3. PLATFORM FEATURES (Ukuran Card Diperkecil & Lebih Ramping) */}
+      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Platform Features</h2>
           <p className="text-sm sm:text-base text-gray-600 mt-2">Four powerful tools designed specifically for the deaf community’s success.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Feature Card 1 */}
           <div 
             onClick={() => setCurrentPage('job-portal')}
-            className="bg-white p-8 rounded-3xl border border-indigo-100/80 shadow-sm hover:shadow-xl transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white p-5 sm:p-6 rounded-2xl border border-indigo-100/80 shadow-sm hover:shadow-lg transition cursor-pointer group flex flex-col justify-between"
           >
             <div>
-              <div className="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-                <Briefcase className="w-7 h-7" />
+              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+                <Briefcase className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Job Portal</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1.5">Job Portal</h3>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                 Find deaf-friendly jobs with remote communication support.
               </p>
             </div>
-            <div className="mt-6 flex items-center text-indigo-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+            <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between text-indigo-600 font-semibold text-xs sm:text-sm">
               <span>Explore Feature</span>
-              <ArrowRight className="w-4 h-4 ml-1.5" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
 
           {/* Feature Card 2 */}
           <div 
             onClick={() => setCurrentPage('workshop')}
-            className="bg-white p-8 rounded-3xl border border-emerald-100/80 shadow-sm hover:shadow-xl transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white p-5 sm:p-6 rounded-2xl border border-emerald-100/80 shadow-sm hover:shadow-lg transition cursor-pointer group flex flex-col justify-between"
           >
             <div>
-              <div className="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-                <BookOpen className="w-7 h-7" />
+              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-emerald-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Workshop</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1.5">Workshop</h3>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                 Learn new skills through visual classes and sign language.
               </p>
             </div>
-            <div className="mt-6 flex items-center text-emerald-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+            <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between text-emerald-600 font-semibold text-xs sm:text-sm">
               <span>Explore Feature</span>
-              <ArrowRight className="w-4 h-4 ml-1.5" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
 
           {/* Feature Card 3 */}
           <div 
             onClick={() => setCurrentPage('mental-health')}
-            className="bg-white p-8 rounded-3xl border border-purple-100/80 shadow-sm hover:shadow-xl transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white p-5 sm:p-6 rounded-2xl border border-purple-100/80 shadow-sm hover:shadow-lg transition cursor-pointer group flex flex-col justify-between"
           >
             <div>
-              <div className="w-14 h-14 bg-purple-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
-                <HeartHandshake className="w-7 h-7" />
+              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-purple-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
+                <HeartHandshake className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Mental Health Chat</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1.5">Mental Health Chat</h3>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                 Professional mental health support with captioning and visual counselor.
               </p>
             </div>
-            <div className="mt-6 flex items-center text-purple-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+            <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between text-purple-600 font-semibold text-xs sm:text-sm">
               <span>Explore Feature</span>
-              <ArrowRight className="w-4 h-4 ml-1.5" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
 
           {/* Feature Card 4 */}
           <div 
             onClick={() => setCurrentPage('speech-to-text')}
-            className="bg-white p-8 rounded-3xl border border-rose-100/80 shadow-sm hover:shadow-xl transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white p-5 sm:p-6 rounded-2xl border border-rose-100/80 shadow-sm hover:shadow-lg transition cursor-pointer group flex flex-col justify-between"
           >
             <div>
-              <div className="w-14 h-14 bg-rose-600 text-white rounded-2xl flex items-center justify-center mb-6 shadow-md shadow-rose-500/20 group-hover:scale-105 transition-transform">
-                <Mic className="w-7 h-7" />
+              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-rose-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-md shadow-rose-500/20 group-hover:scale-105 transition-transform">
+                <Mic className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Speech to Text</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1.5">Speech to Text</h3>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                 Convert speech to text for better communication.
               </p>
             </div>
-            <div className="mt-6 flex items-center text-rose-600 font-semibold text-sm group-hover:translate-x-1 transition-transform">
+            <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between text-rose-600 font-semibold text-xs sm:text-sm">
               <span>Explore Feature</span>
-              <ArrowRight className="w-4 h-4 ml-1.5" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
         </div>
@@ -233,7 +223,6 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Item 1 */}
             <div className="bg-indigo-50/50 p-6 rounded-2xl border border-indigo-100">
               <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-indigo-600 shadow-sm mb-4">
                 <Video className="w-5 h-5" />
@@ -244,7 +233,6 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               </p>
             </div>
 
-            {/* Item 2 */}
             <div className="bg-emerald-50/50 p-6 rounded-2xl border border-emerald-100">
               <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-emerald-600 shadow-sm mb-4">
                 <Sparkles className="w-5 h-5" />
@@ -255,7 +243,6 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               </p>
             </div>
 
-            {/* Item 3 */}
             <div className="bg-purple-50/50 p-6 rounded-2xl border border-purple-100">
               <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-purple-600 shadow-sm mb-4">
                 <ShieldCheck className="w-5 h-5" />
@@ -266,7 +253,6 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               </p>
             </div>
 
-            {/* Item 4 */}
             <div className="bg-pink-50/50 p-6 rounded-2xl border border-pink-100">
               <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-pink-600 shadow-sm mb-4">
                 <HeartHandshake className="w-5 h-5" />
@@ -277,7 +263,6 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               </p>
             </div>
 
-            {/* Item 5 */}
             <div className="bg-amber-50/50 p-6 rounded-2xl border border-amber-100">
               <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-amber-600 shadow-sm mb-4">
                 <Mic className="w-5 h-5" />
@@ -288,7 +273,6 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               </p>
             </div>
 
-            {/* Item 6 */}
             <div className="bg-sky-50/50 p-6 rounded-2xl border border-sky-100">
               <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-sky-600 shadow-sm mb-4">
                 <Globe className="w-5 h-5" />
@@ -386,13 +370,13 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button 
               onClick={() => alert("Assessment feature starting...")}
-              className="w-full sm:w-auto px-8 py-4 bg-white text-gray-900 font-bold rounded-2xl shadow-lg hover:bg-gray-100 transition"
+              className="w-full sm:w-auto px-8 py-4 bg-white text-gray-900 font-bold rounded-2xl shadow-lg hover:bg-gray-100 transition cursor-pointer"
             >
               Take Assessment
             </button>
             <button 
               onClick={() => setCurrentPage('workshop')}
-              className="w-full sm:w-auto px-8 py-4 bg-white/10 border border-white/30 text-white font-bold rounded-2xl hover:bg-white/20 transition backdrop-blur-sm"
+              className="w-full sm:w-auto px-8 py-4 bg-white/10 border border-white/30 text-white font-bold rounded-2xl hover:bg-white/20 transition backdrop-blur-sm cursor-pointer"
             >
               Browse Workshops
             </button>
