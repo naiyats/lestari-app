@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { 
   Sparkles, 
   ArrowRight, 
@@ -20,16 +22,23 @@ interface HomePageProps {
 }
 
 export default function HomePage({ setCurrentPage }: HomePageProps) {
+  const [activeCard, setActiveCard] = useState<string | null>(null);
+
+  const handleCardClick = (page: string, id: string) => {
+    setActiveCard(id);
+    setTimeout(() => {
+      setCurrentPage(page);
+    }, 150);
+  };
+
   return (
     <div className="min-h-screen text-gray-800 pb-16">
       
       {/* 1. HERO SECTION */}
       <section className="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center overflow-hidden">
-        {/* Background Decorative Blurs */}
         <div className="absolute top-10 left-1/4 w-72 h-72 bg-purple-300/30 rounded-full blur-3xl pointer-events-none -z-10"></div>
         <div className="absolute top-20 right-1/4 w-72 h-72 bg-pink-300/30 rounded-full blur-3xl pointer-events-none -z-10"></div>
 
-        {/* Badge */}
         <div className="inline-flex items-center space-x-2 bg-emerald-50 border border-emerald-200 px-4 py-1.5 rounded-full shadow-sm mb-6">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span className="text-xs font-semibold text-emerald-700 tracking-wide uppercase">
@@ -37,7 +46,6 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
           </span>
         </div>
 
-        {/* Hero Title */}
         <h1 className="text-4xl sm:text-6xl font-black text-gray-900 tracking-tight mb-6">
           Empowering the <br className="hidden sm:inline" />
           <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
@@ -45,12 +53,10 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
           </span>
         </h1>
 
-        {/* Hero Description */}
         <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-600 mb-8 leading-relaxed">
           The world’s first comprehensive platform designed exclusively for deaf individuals. Find employment, learn new skills, and maintain mental wellness through accessible technology.
         </p>
 
-        {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button 
             onClick={() => setCurrentPage('job-portal')}
@@ -124,7 +130,7 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
         </div>
       </section>
 
-      {/* 3. PLATFORM FEATURES (Disesuaikan Persis Sesuai Referensi Gambar Figma) */}
+      {/* 3. PLATFORM FEATURES (Border tebal sesuai warna logo saat diklik) */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Platform Features</h2>
@@ -133,12 +139,14 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           
-          {/* Feature Card 1 */}
+          {/* Feature Card 1 (Job Portal - Biru) */}
           <div 
-            onClick={() => setCurrentPage('job-portal')}
-            className="bg-white p-6 sm:p-7 rounded-[2rem] border border-indigo-100 shadow-sm hover:shadow-md transition cursor-pointer group flex items-start space-x-5"
+            onClick={() => handleCardClick('job-portal', 'job')}
+            className={`bg-white p-6 sm:p-7 rounded-[2rem] transition-all cursor-pointer group flex items-start space-x-5 ${
+              activeCard === 'job' ? 'border-4 border-blue-600 shadow-lg' : 'border border-gray-100 shadow-sm hover:shadow-md'
+            }`}
           >
-            <div className="w-14 h-14 bg-[#4F46E5] text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
+            <div className="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-transform">
               <Briefcase className="w-7 h-7" />
             </div>
             <div className="flex-1 min-w-0">
@@ -146,19 +154,21 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
                 Find deaf-friendly jobs with visual communication support.
               </p>
-              <div className="inline-flex items-center text-[#4F46E5] font-semibold text-xs sm:text-sm group-hover:translate-x-1 transition-transform">
+              <div className="inline-flex items-center text-blue-600 font-semibold text-xs sm:text-sm group-hover:translate-x-1 transition-transform">
                 <span>Explore Feature</span>
                 <ArrowRight className="w-4 h-4 ml-1.5" />
               </div>
             </div>
           </div>
 
-          {/* Feature Card 2 */}
+          {/* Feature Card 2 (Workshop - Hijau) */}
           <div 
-            onClick={() => setCurrentPage('workshop')}
-            className="bg-white p-6 sm:p-7 rounded-[2rem] border-2 border-[#10B981]/40 shadow-sm hover:shadow-md transition cursor-pointer group flex items-start space-x-5"
+            onClick={() => handleCardClick('workshop', 'workshop')}
+            className={`bg-white p-6 sm:p-7 rounded-[2rem] transition-all cursor-pointer group flex items-start space-x-5 ${
+              activeCard === 'workshop' ? 'border-4 border-green-500 shadow-lg' : 'border border-gray-100 shadow-sm hover:shadow-md'
+            }`}
           >
-            <div className="w-14 h-14 bg-[#10B981] text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-emerald-500/25 group-hover:scale-105 transition-transform">
+            <div className="w-14 h-14 bg-green-600 text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-green-500/25 group-hover:scale-105 transition-transform">
               <BookOpen className="w-7 h-7" />
             </div>
             <div className="flex-1 min-w-0">
@@ -166,19 +176,21 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
                 Learn new skills through visual tutorials and sign language.
               </p>
-              <div className="inline-flex items-center text-[#10B981] font-semibold text-xs sm:text-sm group-hover:translate-x-1 transition-transform">
+              <div className="inline-flex items-center text-green-600 font-semibold text-xs sm:text-sm group-hover:translate-x-1 transition-transform">
                 <span>Explore Feature</span>
                 <ArrowRight className="w-4 h-4 ml-1.5" />
               </div>
             </div>
           </div>
 
-          {/* Feature Card 3 */}
+          {/* Feature Card 3 (Mental Health - Ungu) */}
           <div 
-            onClick={() => setCurrentPage('mental-health')}
-            className="bg-white p-6 sm:p-7 rounded-[2rem] border border-purple-100 shadow-sm hover:shadow-md transition cursor-pointer group flex items-start space-x-5"
+            onClick={() => handleCardClick('mental-health', 'mental')}
+            className={`bg-white p-6 sm:p-7 rounded-[2rem] transition-all cursor-pointer group flex items-start space-x-5 ${
+              activeCard === 'mental' ? 'border-4 border-purple-600 shadow-lg' : 'border border-gray-100 shadow-sm hover:shadow-md'
+            }`}
           >
-            <div className="w-14 h-14 bg-[#9333EA] text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-purple-500/25 group-hover:scale-105 transition-transform">
+            <div className="w-14 h-14 bg-purple-600 text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-purple-500/25 group-hover:scale-105 transition-transform">
               <HeartHandshake className="w-7 h-7" />
             </div>
             <div className="flex-1 min-w-0">
@@ -186,19 +198,21 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
                 AI-powered mental health support with visual assistance.
               </p>
-              <div className="inline-flex items-center text-[#9333EA] font-semibold text-xs sm:text-sm group-hover:translate-x-1 transition-transform">
+              <div className="inline-flex items-center text-purple-600 font-semibold text-xs sm:text-sm group-hover:translate-x-1 transition-transform">
                 <span>Explore Feature</span>
                 <ArrowRight className="w-4 h-4 ml-1.5" />
               </div>
             </div>
           </div>
 
-          {/* Feature Card 4 */}
+          {/* Feature Card 4 (Speech to Text - Merah) */}
           <div 
-            onClick={() => setCurrentPage('speech-to-text')}
-            className="bg-white p-6 sm:p-7 rounded-[2rem] border border-rose-100 shadow-sm hover:shadow-md transition cursor-pointer group flex items-start space-x-5"
+            onClick={() => handleCardClick('speech-to-text', 'speech')}
+            className={`bg-white p-6 sm:p-7 rounded-[2rem] transition-all cursor-pointer group flex items-start space-x-5 ${
+              activeCard === 'speech' ? 'border-4 border-red-500 shadow-lg' : 'border border-gray-100 shadow-sm hover:shadow-md'
+            }`}
           >
-            <div className="w-14 h-14 bg-[#EF4444] text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-rose-500/25 group-hover:scale-105 transition-transform">
+            <div className="w-14 h-14 bg-red-600 text-white rounded-2xl flex items-center justify-center shrink-0 shadow-lg shadow-red-500/25 group-hover:scale-105 transition-transform">
               <Mic className="w-7 h-7" />
             </div>
             <div className="flex-1 min-w-0">
@@ -206,7 +220,7 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
               <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
                 Convert speech to text for better communication.
               </p>
-              <div className="inline-flex items-center text-[#EF4444] font-semibold text-xs sm:text-sm group-hover:translate-x-1 transition-transform">
+              <div className="inline-flex items-center text-red-600 font-semibold text-xs sm:text-sm group-hover:translate-x-1 transition-transform">
                 <span>Explore Feature</span>
                 <ArrowRight className="w-4 h-4 ml-1.5" />
               </div>
