@@ -124,91 +124,91 @@ export default function HomePage({ setCurrentPage }: HomePageProps) {
         </div>
       </section>
 
-      {/* 3. PLATFORM FEATURES (Ukuran Card Diperkecil & Lebih Ramping) */}
+      {/* 3. PLATFORM FEATURES (Disesuaikan Persis dengan Figma: Padding dan Margin Lebih Ramping) */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Platform Features</h2>
           <p className="text-sm sm:text-base text-gray-600 mt-2">Four powerful tools designed specifically for the deaf community’s success.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
           {/* Feature Card 1 */}
           <div 
             onClick={() => setCurrentPage('job-portal')}
-            className="bg-white p-5 sm:p-6 rounded-2xl border border-indigo-100/80 shadow-sm hover:shadow-lg transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white p-5 rounded-[1.75rem] border border-indigo-100 shadow-sm hover:shadow-md transition cursor-pointer group flex items-start space-x-4"
           >
-            <div>
-              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
-                <Briefcase className="w-5 h-5 sm:w-6 sm:h-6" />
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1.5">Job Portal</h3>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                Find deaf-friendly jobs with remote communication support.
-              </p>
+            <div className="w-12 h-12 bg-[#4F46E5] text-white rounded-2xl flex items-center justify-center shrink-0 shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+              <Briefcase className="w-6 h-6" />
             </div>
-            <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between text-indigo-600 font-semibold text-xs sm:text-sm">
-              <span>Explore Feature</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg font-bold text-gray-900 mb-1">Job Portal</h3>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-3">
+                Find deaf-friendly jobs with visual communication support.
+              </p>
+              <div className="inline-flex items-center text-[#4F46E5] font-semibold text-xs group-hover:translate-x-1 transition-transform">
+                <span>Explore Feature</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-1" />
+              </div>
             </div>
           </div>
 
           {/* Feature Card 2 */}
           <div 
             onClick={() => setCurrentPage('workshop')}
-            className="bg-white p-5 sm:p-6 rounded-2xl border border-emerald-100/80 shadow-sm hover:shadow-lg transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white p-5 rounded-[1.75rem] border border-emerald-200 shadow-sm hover:shadow-md transition cursor-pointer group flex items-start space-x-4"
           >
-            <div>
-              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-emerald-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1.5">Workshop</h3>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                Learn new skills through visual classes and sign language.
-              </p>
+            <div className="w-12 h-12 bg-[#10B981] text-white rounded-2xl flex items-center justify-center shrink-0 shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+              <BookOpen className="w-6 h-6" />
             </div>
-            <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between text-emerald-600 font-semibold text-xs sm:text-sm">
-              <span>Explore Feature</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg font-bold text-gray-900 mb-1">Workshop</h3>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-3">
+                Learn new skills through visual tutorials and sign language.
+              </p>
+              <div className="inline-flex items-center text-[#10B981] font-semibold text-xs group-hover:translate-x-1 transition-transform">
+                <span>Explore Feature</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-1" />
+              </div>
             </div>
           </div>
 
           {/* Feature Card 3 */}
           <div 
             onClick={() => setCurrentPage('mental-health')}
-            className="bg-white p-5 sm:p-6 rounded-2xl border border-purple-100/80 shadow-sm hover:shadow-lg transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white p-5 rounded-[1.75rem] border border-purple-100 shadow-sm hover:shadow-md transition cursor-pointer group flex items-start space-x-4"
           >
-            <div>
-              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-purple-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
-                <HeartHandshake className="w-5 h-5 sm:w-6 sm:h-6" />
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1.5">Mental Health Chat</h3>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                Professional mental health support with captioning and visual counselor.
-              </p>
+            <div className="w-12 h-12 bg-[#9333EA] text-white rounded-2xl flex items-center justify-center shrink-0 shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
+              <HeartHandshake className="w-6 h-6" />
             </div>
-            <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between text-purple-600 font-semibold text-xs sm:text-sm">
-              <span>Explore Feature</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg font-bold text-gray-900 mb-1">Mental Health Chat</h3>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-3">
+                AI-powered mental health support with visual assistance.
+              </p>
+              <div className="inline-flex items-center text-[#9333EA] font-semibold text-xs group-hover:translate-x-1 transition-transform">
+                <span>Explore Feature</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-1" />
+              </div>
             </div>
           </div>
 
           {/* Feature Card 4 */}
           <div 
             onClick={() => setCurrentPage('speech-to-text')}
-            className="bg-white p-5 sm:p-6 rounded-2xl border border-rose-100/80 shadow-sm hover:shadow-lg transition cursor-pointer group flex flex-col justify-between"
+            className="bg-white p-5 rounded-[1.75rem] border border-rose-100 shadow-sm hover:shadow-md transition cursor-pointer group flex items-start space-x-4"
           >
-            <div>
-              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-rose-600 text-white rounded-xl flex items-center justify-center mb-4 shadow-md shadow-rose-500/20 group-hover:scale-105 transition-transform">
-                <Mic className="w-5 h-5 sm:w-6 sm:h-6" />
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1.5">Speech to Text</h3>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+            <div className="w-12 h-12 bg-[#EF4444] text-white rounded-2xl flex items-center justify-center shrink-0 shadow-md shadow-rose-500/20 group-hover:scale-105 transition-transform">
+              <Mic className="w-6 h-6" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg font-bold text-gray-900 mb-1">Speech to Text</h3>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-3">
                 Convert speech to text for better communication.
               </p>
-            </div>
-            <div className="mt-4 pt-3 border-t border-gray-50 flex items-center justify-between text-rose-600 font-semibold text-xs sm:text-sm">
-              <span>Explore Feature</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <div className="inline-flex items-center text-[#EF4444] font-semibold text-xs group-hover:translate-x-1 transition-transform">
+                <span>Explore Feature</span>
+                <ArrowRight className="w-3.5 h-3.5 ml-1" />
+              </div>
             </div>
           </div>
         </div>
