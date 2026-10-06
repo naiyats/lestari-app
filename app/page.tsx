@@ -12,7 +12,7 @@ import { ArrowRight, X, Lock, Mail } from 'lucide-react';
 
 export default function Page() {
   const [currentPage, setCurrentPage] = useState('home');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true); // <-- SUDAH DI-BYPASS KE TRUE
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [modalType, setModalType] = useState<'none' | 'forgot' | 'contact'>('none');
