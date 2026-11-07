@@ -170,11 +170,10 @@ const resources = [
 
 // Call Gemini Flash API 
 const callGeminiAPI = async (message: string, mood?: string): Promise<string> => {
-  // Gunakan langsung API Key kamu secara aman atau ambil dari env
-  const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || 'MASUKKAN_API_KEY_KAMU_DI_SINI'; 
+  const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || 'AIzaSyA_8CuvEvGLFkoDL4_MpZPAJtVO5ELhfLY'; 
   const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
   
-  let systemPrompt = `Kamu adalah 'Deafine', teman AI yang hangat, santai, asyik, dan empatik untuk kesehatan mental di portal Lestari. Gunakan bahasa Indonesia sehari-hari yang natural, luwes, dan ramah seperti teman dekat. Jawab dengan singkat, padat, dan penuh kepedulian (2-4 kalimat).`;
+  let systemPrompt = `Kamu adalah 'Lesbot', teman AI yang hangat, santai, asyik, dan empatik untuk kesehatan mental di portal Lestari. Gunakan bahasa Indonesia sehari-hari yang natural, luwes, dan ramah seperti teman dekat. Jawab dengan singkat, padat, dan penuh kepedulian (2-4 kalimat).`;
 
   if (mood) {
     systemPrompt += `\n\nUser bilang moodnya lagi "${mood}". Tanggapi dengan santai dan hangat ya.`;
@@ -201,11 +200,11 @@ const callGeminiAPI = async (message: string, mood?: string): Promise<string> =>
       return data.candidates[0].content.parts[0].text;
     } else {
       console.error('API Response Error:', data);
-      return "Eh, maaf banget ya, tadi otaknya sempat nge-lag dikit. Coba ulangi pesan kamu atau ceritain lagi pelan-pelan ya!";
+      return "Eh, maaf banget ya, Lesbot tadi sempat nge-lag dikit. Coba ulangi pesan kamu atau ceritain lagi pelan-pelan ya!";
     }
   } catch (error) {
     console.error('Error calling Gemini API:', error);
-    return "Duh, koneksinya lagi agak ngadat nih. Tapi aku tetap di sini nemenin kamu kok, coba kirim pesan lagi ya!";
+    return "Duh, koneksinya Lesbot lagi agak ngadat nih. Tapi aku tetap di sini nemenin kamu kok, coba kirim pesan lagi ya!";
   }
 };
 
