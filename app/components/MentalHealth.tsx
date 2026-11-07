@@ -168,25 +168,20 @@ const resources = [
   }
 ];
 
-// Call Gemini Flash API with flexible, casual, and friendly personality
+// Call Gemini Flash API 
 const callGeminiAPI = async (message: string, mood?: string): Promise<string> => {
-  const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || ''; 
-  const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+  // Gunakan langsung API Key kamu secara aman atau ambil dari env
+  const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || 'MASUKKAN_API_KEY_KAMU_DI_SINI'; 
+  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
   
-  let systemPrompt = `Kamu adalah 'Deafine', teman AI yang hangat, santai, asyik, dan empatik untuk kesehatan mental di portal Lestari.
-Aturan gaya bicaramu:
-- Gunakan bahasa Indonesia sehari-hari yang natural, luwes, santai, dan ramah seperti teman dekat yang siap mendengarkan (jangan pakai bahasa Inggris kecuali user yang minta).
-- Jangan pakai bahasa robot, kuesioner formal, atau gaya bahasa konseling klinis yang kaku.
-- Jawab dengan singkat, padat, dan penuh kepedulian (cukup 2-4 kalimat yang hangat).
-- Validasi perasaan user dengan tulus tanpa menghakimi, dan berikan dukungan semangat yang asyik.
-- Jangan pernah memberikan diagnosis medis.`;
+  let systemPrompt = `Kamu adalah 'Deafine', teman AI yang hangat, santai, asyik, dan empatik untuk kesehatan mental di portal Lestari. Gunakan bahasa Indonesia sehari-hari yang natural, luwes, dan ramah seperti teman dekat. Jawab dengan singkat, padat, dan penuh kepedulian (2-4 kalimat).`;
 
   if (mood) {
-    systemPrompt += `\n\nUser baru saja bilang kalau mood mereka hari ini lagi "${mood}". Sapa dan tanggapi kondisi mood mereka ini dengan santai, hangat, dan penuh empati ya.`;
+    systemPrompt += `\n\nUser bilang moodnya lagi "${mood}". Tanggapi dengan santai dan hangat ya.`;
   }
 
   try {
-    const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -194,40 +189,23 @@ Aturan gaya bicaramu:
       body: JSON.stringify({
         contents: [{
           parts: [{
-            text: `${systemPrompt}\n\nPesan dari user: "${message}"`
+            text: `${systemPrompt}\n\nPesan user: "${message}"`
           }]
-        }],
-        generationConfig: {
-          temperature: 0.8, // Dibuat sedikit lebih kreatif & luwes
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 250,
-        },
-        safetySettings: [
-          { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-          { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-          { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
-          { category: "HARM_CATEGORY_DANGEROUS_CURRENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" }
-        ]
+        }]
       })
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
     const data = await response.json();
     
-    if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+    if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
       return data.candidates[0].content.parts[0].text;
     } else {
-      throw new Error('No response generated');
+      console.error('API Response Error:', data);
+      return "Eh, maaf banget ya, tadi otaknya sempat nge-lag dikit. Coba ulangi pesan kamu atau ceritain lagi pelan-pelan ya!";
     }
   } catch (error) {
     console.error('Error calling Gemini API:', error);
-    
-    // Fallback santai kalau misal ada kendala
-    return "Eh, bentar ya koneksiku agak ngadat nih. Tapi intinya aku tetap di sini nemenin kamu kok, cerita aja pelan-pelan ya! Kalau butuh bantuan darurat, cek info krisis di bawah ya.";
+    return "Duh, koneksinya lagi agak ngadat nih. Tapi aku tetap di sini nemenin kamu kok, coba kirim pesan lagi ya!";
   }
 };
 
