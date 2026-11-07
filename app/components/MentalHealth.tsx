@@ -168,15 +168,20 @@ const resources = [
   }
 ];
 
-// Call Gemini Flash API 
+// Call Gemini Flash API with smart context handling
 const callGeminiAPI = async (message: string, mood?: string): Promise<string> => {
   const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || 'AIzaSyA_8CuvEvGLFkoDL4_MpZPAJtVO5ELhfLY'; 
   const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
   
-  let systemPrompt = `Kamu adalah 'Lesbot', teman AI yang hangat, santai, asyik, dan empatik untuk kesehatan mental di portal Lestari. Gunakan bahasa Indonesia sehari-hari yang natural, luwes, dan ramah seperti teman dekat. Jawab dengan singkat, padat, dan penuh kepedulian (2-4 kalimat).`;
+  let systemPrompt = `You are 'Lesbot', an intelligent, highly empathetic, and supportive AI mental health companion for the Lestari portal. 
+Your core goals:
+- Answer the user's questions accurately, thoughtfully, and contextually based on what they are asking.
+- Provide practical coping strategies, validation, and emotional support.
+- Keep your tone warm, conversational, professional yet friendly, and natural.
+- Avoid repeating generic error messages; always address the user's specific input directly.`;
 
   if (mood) {
-    systemPrompt += `\n\nUser bilang moodnya lagi "${mood}". Tanggapi dengan santai dan hangat ya.`;
+    systemPrompt += `\n\nThe user noted their current mood is "${mood}". Please acknowledge this in your response.`;
   }
 
   try {
@@ -186,11 +191,16 @@ const callGeminiAPI = async (message: string, mood?: string): Promise<string> =>
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: `${systemPrompt}\n\nPesan user: "${message}"`
-          }]
-        }]
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: `${systemPrompt}\n\nUser input: ${message}` }]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 300,
+        }
       })
     });
 
@@ -199,12 +209,12 @@ const callGeminiAPI = async (message: string, mood?: string): Promise<string> =>
     if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
       return data.candidates[0].content.parts[0].text;
     } else {
-      console.error('API Response Error:', data);
-      return "Eh, maaf banget ya, Lesbot tadi sempat nge-lag dikit. Coba ulangi pesan kamu atau ceritain lagi pelan-pelan ya!";
+      console.error('API Response Structure Error:', data);
+      return "I'm here for you! It seems I missed that thought for a second. Could you tell me a bit more about what's on your mind?";
     }
   } catch (error) {
     console.error('Error calling Gemini API:', error);
-    return "Duh, koneksinya Lesbot lagi agak ngadat nih. Tapi aku tetap di sini nemenin kamu kok, coba kirim pesan lagi ya!";
+    return "I'm having a brief connection hiccup, but I'm still right here with you. Feel free to share what you're going through.";
   }
 };
 
