@@ -1,6 +1,7 @@
-import React from 'react';
-import { Accessibility, ArrowLeft, Menu, X } from 'lucide-react';
-import { EarOff } from 'lucide-react';
+'use client';
+
+import React, { useState } from 'react';
+import { ArrowLeft, Menu, X, EarOff } from 'lucide-react';
 
 interface HeaderProps {
   currentPage: string;
@@ -19,14 +20,14 @@ export default function Header({ currentPage, setCurrentPage, features }: Header
     <header className="bg-white/85 backdrop-blur-md border-b border-indigo-100 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Logo & Brand Name */}
           <div className="flex items-center space-x-2">
             <button 
               onClick={() => {
                 setCurrentPage('home');
                 setMobileMenuOpen(false);
               }}
-              className="flex items-center space-x-2.5 hover:opacity-90 transition-opacity"
+              className="flex items-center space-x-2.5 hover:opacity-90 transition-opacity cursor-pointer"
             >
               <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md shadow-purple-500/20">
                 <EarOff className="w-5 h-5 text-white" />
@@ -41,7 +42,7 @@ export default function Header({ currentPage, setCurrentPage, features }: Header
           <nav className="hidden md:flex space-x-8">
             <button 
               onClick={() => setCurrentPage('home')}
-              className={`transition-colors font-medium text-sm ${
+              className={`transition-colors font-medium text-sm cursor-pointer ${
                 currentPage === 'home' 
                   ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1' 
                   : 'text-gray-600 hover:text-indigo-600'
@@ -53,7 +54,7 @@ export default function Header({ currentPage, setCurrentPage, features }: Header
               <button
                 key={feature.id}
                 onClick={() => setCurrentPage(feature.page)}
-                className={`transition-colors font-medium text-sm ${
+                className={`transition-colors font-medium text-sm cursor-pointer ${
                   currentPage === feature.page 
                     ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1' 
                     : 'text-gray-600 hover:text-indigo-600'
@@ -68,7 +69,7 @@ export default function Header({ currentPage, setCurrentPage, features }: Header
           <div className="md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-gray-700 hover:text-indigo-600 transition-colors p-2"
+              className="text-gray-700 hover:text-indigo-600 transition-colors p-2 cursor-pointer"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -114,7 +115,7 @@ export default function Header({ currentPage, setCurrentPage, features }: Header
                     setCurrentPage('home');
                     setMobileMenuOpen(false);
                   }}
-                  className="flex items-center space-x-2 text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-xl transition-colors font-medium text-left"
+                  className="flex items-center space-x-2 text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-xl transition-colors font-medium text-left cursor-pointer"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>Kembali ke Beranda</span>

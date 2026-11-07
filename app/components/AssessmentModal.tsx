@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { X, ArrowRight, User, Briefcase, GraduationCap, Code, Palette, Megaphone, CheckCircle, Check } from 'lucide-react'; // Tambah ikon Check
+import { X, ArrowRight, User, Briefcase, GraduationCap, Code, Palette, Megaphone, CheckCircle, Check } from 'lucide-react';
 
 const steps = [
   { id: 1, name: 'Info Pribadi' },
@@ -73,16 +73,16 @@ export default function AssessmentModal({ isOpen, onClose, onComplete }: { isOpe
                     </header>
                     
                     <div className="p-6 flex-shrink-0">
-                        <div className="flex justify-between items-center -mx-4 sm:-mx-0"> {/* Adjusted margin for small screens */}
+                        <div className="flex justify-between items-center -mx-4 sm:-mx-0">
                             {steps.map((s, index) => (
-                                <div key={s.id} className="flex items-center flex-1 sm:flex-none justify-center sm:justify-start px-2 sm:px-0"> {/* Added justify-center for items */}
+                                <div key={s.id} className="flex items-center flex-1 sm:flex-none justify-center sm:justify-start px-2 sm:px-0">
                                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${step >= s.id ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-500'}`}>
                                         {step > s.id ? <Check size={16}/> : s.id}
                                     </div>
-                                    <p className={`ml-2 text-sm hidden sm:block ${step >= s.id ? 'font-semibold text-indigo-600' : 'text-slate-500'} whitespace-nowrap`}> {/* Added whitespace-nowrap and ml-2 */}
+                                    <p className={`ml-2 text-sm hidden sm:block ${step >= s.id ? 'font-semibold text-indigo-600' : 'text-slate-500'} whitespace-nowrap`}>
                                         {s.name}
                                     </p>
-                                    {index < steps.length - 1 && <div className={`h-1 w-4 sm:w-12 md:w-20 ml-2 sm:ml-4 transition-colors ${step > s.id ? 'bg-indigo-600' : 'bg-slate-200'}`}></div>} {/* Adjusted ml for line */}
+                                    {index < steps.length - 1 && <div className={`h-1 w-4 sm:w-12 md:w-20 ml-2 sm:ml-4 transition-colors ${step > s.id ? 'bg-indigo-600' : 'bg-slate-200'}`}></div>}
                                 </div>
                             ))}
                         </div>
@@ -96,14 +96,13 @@ export default function AssessmentModal({ isOpen, onClose, onComplete }: { isOpe
                                         <h3 className="font-bold text-xl text-slate-800">Mari kita mulai dengan perkenalan.</h3>
                                         <div>
                                             <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">Siapa nama Anda?</label>
-                                            {/* PERBAIKAN: Input nama sekarang berwarna putih */}
-                                            <input type="text" id="name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full p-2.5 border border-slate-300 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Contoh: Budi Santoso"/>
+                                            <input type="text" id="name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full p-2.5 border border-slate-300 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:ring-indigo-500 focus:border-indigo-500 outline-none" placeholder="Contoh: Budi Santoso"/>
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-slate-700 mb-2">Apa level pengalaman Anda saat ini?</label>
                                             <div className="grid grid-cols-3 gap-2">
                                                 {['Pemula', 'Menengah', 'Mahir'].map(level => (
-                                                    <button key={level} onClick={() => setFormData({...formData, experienceLevel: level})} className={`p-3 text-center rounded-lg border-2 ${formData.experienceLevel === level ? 'bg-indigo-100 border-indigo-500 text-indigo-700' : 'bg-white border-slate-300 hover:border-indigo-400 text-slate-800'}`}>
+                                                    <button key={level} onClick={() => setFormData({...formData, experienceLevel: level})} className={`p-3 text-center rounded-lg border-2 font-medium transition-all ${formData.experienceLevel === level ? 'bg-indigo-100 border-indigo-500 text-indigo-700' : 'bg-white border-slate-300 hover:border-indigo-400 text-slate-800'}`}>
                                                         {level}
                                                     </button>
                                                 ))}
@@ -117,7 +116,7 @@ export default function AssessmentModal({ isOpen, onClose, onComplete }: { isOpe
                                         <p className="text-slate-600 text-sm mb-4">Pilih satu atau lebih.</p>
                                         <div className="grid grid-cols-2 gap-4">
                                             {interestOptions.map(opt => (
-                                                <button key={opt.name} onClick={() => toggleInterest(opt.name)} className={`p-4 text-center rounded-lg border-2 flex flex-col items-center justify-center gap-2 ${formData.interests.includes(opt.name) ? 'bg-indigo-100 border-indigo-500 text-indigo-700' : 'bg-white border-slate-300 hover:border-indigo-400 text-slate-800'}`}>
+                                                <button key={opt.name} onClick={() => toggleInterest(opt.name)} className={`p-4 text-center rounded-lg border-2 flex flex-col items-center justify-center gap-2 transition-all ${formData.interests.includes(opt.name) ? 'bg-indigo-100 border-indigo-500 text-indigo-700' : 'bg-white border-slate-300 hover:border-indigo-400 text-slate-800'}`}>
                                                     {opt.icon}
                                                     <span className="font-semibold">{opt.name}</span>
                                                 </button>
@@ -131,7 +130,7 @@ export default function AssessmentModal({ isOpen, onClose, onComplete }: { isOpe
                                         <p className="text-slate-600 text-sm mb-4">Pilih salah satu yang paling sesuai.</p>
                                         <div className="grid grid-cols-2 gap-4">
                                             {goalOptions.map(opt => (
-                                                <button key={opt.name} onClick={() => setFormData({...formData, primaryGoal: opt.name})} className={`p-4 text-center rounded-lg border-2 flex flex-col items-center justify-center gap-2 ${formData.primaryGoal === opt.name ? 'bg-indigo-100 border-indigo-500 text-indigo-700' : 'bg-white border-slate-300 hover:border-indigo-400 text-slate-800'}`}>
+                                                <button key={opt.name} onClick={() => setFormData({...formData, primaryGoal: opt.name})} className={`p-4 text-center rounded-lg border-2 flex flex-col items-center justify-center gap-2 transition-all ${formData.primaryGoal === opt.name ? 'bg-indigo-100 border-indigo-500 text-indigo-700' : 'bg-white border-slate-300 hover:border-indigo-400 text-slate-800'}`}>
                                                     {opt.icon}
                                                     <span className="font-semibold">{opt.name}</span>
                                                 </button>
@@ -142,7 +141,7 @@ export default function AssessmentModal({ isOpen, onClose, onComplete }: { isOpe
                                  {step === 4 && (
                                     <div className="space-y-4">
                                         <h3 className="font-bold text-xl text-slate-800">Ringkasan Jawaban</h3>
-                                        <div className="p-4 bg-indigo-50 rounded-lg border border-indigo-200 space-y-2 text-sm">
+                                        <div className="p-4 bg-indigo-50 rounded-lg border border-indigo-200 space-y-2 text-sm text-slate-700">
                                             <p><strong>Nama:</strong> {formData.name || '-'}</p>
                                             <p><strong>Level Pengalaman:</strong> {formData.experienceLevel || '-'}</p>
                                             <p><strong>Minat:</strong> {formData.interests.join(', ') || '-'}</p>
@@ -156,15 +155,15 @@ export default function AssessmentModal({ isOpen, onClose, onComplete }: { isOpe
                     </main>
 
                     <footer className="p-6 border-t bg-white flex justify-between items-center flex-shrink-0">
-                        <button onClick={handleBack} disabled={step === 1} className="px-6 py-2 text-slate-600 font-semibold rounded-lg hover:bg-slate-200 transition-colors disabled:opacity-50">
+                        <button onClick={handleBack} disabled={step === 1} className="px-6 py-2 text-slate-600 font-semibold rounded-lg hover:bg-slate-100 transition-colors disabled:opacity-50">
                             Kembali
                         </button>
                         {step < steps.length ? (
-                            <button onClick={handleNext} className="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700">
+                            <button onClick={handleNext} className="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors">
                                 Lanjutkan
                             </button>
                         ) : (
-                            <button onClick={handleSubmit} className="px-6 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700">
+                            <button onClick={handleSubmit} className="px-6 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors">
                                 Selesai & Kirim
                             </button>
                         )}

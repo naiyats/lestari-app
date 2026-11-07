@@ -1,29 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Send, 
-  Bot, 
-  User, 
-  Heart, 
-  Users, 
-  BookOpen, 
+'use client';
+
+import React, { useState, useRef } from 'react';
+import {
+  Send,
+  Bot,
+  User,
+  Heart,
+  Users,
+  BookOpen,
   Phone,
-  Video,
-  Calendar,
-  Smile,
-  Frown,
-  Meh,
-  ThumbsUp,
-  MessageCircle,
   Shield,
   Clock,
-  Star,
-  Lightbulb,
-  Headphones,
   ChevronDown,
   ChevronUp,
-  ExternalLink,
-  Menu,
-  X
+  ExternalLink
 } from 'lucide-react';
 
 interface Message {
@@ -64,7 +54,7 @@ const selfCareTips = [
     description: "Try the 4-7-8 breathing technique",
     steps: [
       "Breathe in through your nose for 4 counts",
-      "Hold your breath for 7 counts", 
+      "Hold your breath for 7 counts",
       "Exhale through your mouth for 8 counts",
       "Repeat this cycle 3-4 times slowly"
     ]
@@ -75,7 +65,7 @@ const selfCareTips = [
     steps: [
       "Name 5 things you can see around you",
       "Name 4 things you can touch",
-      "Name 3 things you can hear right now", 
+      "Name 3 things you can hear right now",
       "Name 2 things you can smell",
       "Name 1 thing you can taste"
     ]
@@ -117,7 +107,7 @@ const supportGroups = [
   },
   {
     title: "Young Adults Group",
-    time: "Thursdays, 6:30 PM", 
+    time: "Thursdays, 6:30 PM",
     description: "For ages 18-30, discussing life transitions and challenges",
     link: "https://meet.google.com/young-adults-support"
   },
@@ -130,101 +120,34 @@ const supportGroups = [
 ];
 
 const resources = [
-  {
-    title: "Understanding Depression",
-    type: "Article",
-    readTime: "5 min read",
-    link: "https://www.who.int/news-room/fact-sheets/detail/depression"
-  },
-  {
-    title: "Anxiety Management Techniques", 
-    type: "Video Guide",
-    readTime: "12 min watch",
-    link: "https://www.youtube.com/watch?v=anxiety-help"
-  },
-  {
-    title: "Building Mental Resilience",
-    type: "PDF Guide",
-    readTime: "15 min read", 
-    link: "https://www.apa.org/topics/resilience"
-  },
-  {
-    title: "Sleep Hygiene Tips",
-    type: "Interactive Guide",
-    readTime: "8 min guide",
-    link: "https://www.sleepfoundation.org/sleep-hygiene"
-  },
-  {
-    title: "Mindfulness Meditation",
-    type: "Audio Guide",
-    readTime: "10 min listen",
-    link: "https://www.headspace.com/meditation/mindfulness"
-  },
-  {
-    title: "Crisis Coping Strategies",
-    type: "Emergency Guide",
-    readTime: "3 min read",
-    link: "https://suicidepreventionlifeline.org/help-yourself/"
-  }
+  { title: "Understanding Depression", type: "Article", readTime: "5 min read", link: "https://www.who.int/news-room/fact-sheets/detail/depression" },
+  { title: "Anxiety Management Techniques", type: "Video Guide", readTime: "12 min watch", link: "https://www.youtube.com/watch?v=anxiety-help" },
+  { title: "Building Mental Resilience", type: "PDF Guide", readTime: "15 min read", link: "https://www.apa.org/topics/resilience" },
+  { title: "Sleep Hygiene Tips", type: "Interactive Guide", readTime: "8 min guide", link: "https://www.sleepfoundation.org/sleep-hygiene" },
+  { title: "Mindfulness Meditation", type: "Audio Guide", readTime: "10 min listen", link: "https://www.headspace.com/meditation/mindfulness" },
+  { title: "Crisis Coping Strategies", type: "Emergency Guide", readTime: "3 min read", link: "https://suicidepreventionlifeline.org/help-yourself/" }
 ];
 
-// Call Gemini Flash API with smart context handling
-const callGeminiAPI = async (message: string, mood?: string): Promise<string> => {
-  const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || 'AIzaSyA_8CuvEvGLFkoDL4_MpZPAJtVO5ELhfLY'; 
-  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-  
-  let systemPrompt = `You are 'Lesbot', an intelligent, highly empathetic, and supportive AI mental health companion for the Lestari portal. 
-Your core goals:
-- Answer the user's questions accurately, thoughtfully, and contextually based on what they are asking.
-- Provide practical coping strategies, validation, and emotional support.
-- Keep your tone warm, conversational, professional yet friendly, and natural.
-- Avoid repeating generic error messages; always address the user's specific input directly.`;
+// Memanggil server (/api/chat), bukan Gemini langsung
+const callGeminiAPI = async (messagesHistory: Message[], mood?: string): Promise<string> => {
+  const res = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messagesHistory, mood })
+  });
 
-  if (mood) {
-    systemPrompt += `\n\nThe user noted their current mood is "${mood}". Please acknowledge this in your response.`;
-  }
-
-  try {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: `${systemPrompt}\n\nUser input: ${message}` }]
-          }
-        ],
-        generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 300,
-        }
-      })
-    });
-
-    const data = await response.json();
-    
-    if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-      return data.candidates[0].content.parts[0].text;
-    } else {
-      console.error('API Response Structure Error:', data);
-      return "I'm here for you! It seems I missed that thought for a second. Could you tell me a bit more about what's on your mind?";
-    }
-  } catch (error) {
-    console.error('Error calling Gemini API:', error);
-    return "I'm having a brief connection hiccup, but I'm still right here with you. Feel free to share what you're going through.";
-  }
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Gagal memanggil AI');
+  return data.text;
 };
 
 export default function MentalHealthChatbot() {
   const [messages, setMessages] = useState<Message[]>([
-    { 
-      id: 1, 
-      type: 'bot', 
-      message: 'Hello! I\'m your AI wellness companion, powered by Gemini AI to provide personalized mental health support. I\'m here to listen, support, and guide you on your wellness journey. How are you feeling today?', 
-      timestamp: new Date() 
+    {
+      id: 1,
+      type: 'bot',
+      message: "Hello! I'm your AI wellness companion, powered by Gemini AI to provide personalized mental health support. I'm here to listen, support, and guide you on your wellness journey. How are you feeling today?",
+      timestamp: new Date()
     }
   ]);
   const [newMessage, setNewMessage] = useState('');
@@ -232,49 +155,41 @@ export default function MentalHealthChatbot() {
   const [currentMood, setCurrentMood] = useState<string>('');
   const [showMoodSelector, setShowMoodSelector] = useState(true);
   const [expandedTip, setExpandedTip] = useState<number | null>(null);
-  const [showResources, setShowResources] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Remove auto-scroll functionality completely
+  const addBotMessage = (text: string) => {
+    setMessages(prev => [
+      ...prev,
+      { id: Date.now() + 1, type: 'bot', message: text, timestamp: new Date() }
+    ]);
+  };
 
   const handleSendMessage = async () => {
-    if (newMessage.trim()) {
-      const userMessage: Message = {
-        id: Date.now(),
-        type: 'user',
-        message: newMessage,
-        timestamp: new Date(),
-        mood: currentMood
-      };
-      
-      setMessages(prev => [...prev, userMessage]);
-      const messageToSend = newMessage;
-      setNewMessage('');
-      setIsTyping(true);
-      
-      try {
-        const response = await callGeminiAPI(messageToSend, currentMood);
-        
-        const botMessage: Message = {
-          id: Date.now() + 1,
-          type: 'bot',
-          message: response,
-          timestamp: new Date()
-        };
-        
-        setMessages(prev => [...prev, botMessage]);
-      } catch (error) {
-        const errorMessage: Message = {
-          id: Date.now() + 1,
-          type: 'bot',
-          message: "I'm sorry, I'm having trouble connecting right now. Please try again in a moment, or if this is urgent, please reach out to our crisis support.",
-          timestamp: new Date()
-        };
-        setMessages(prev => [...prev, errorMessage]);
-      } finally {
-        setIsTyping(false);
-        setShowMoodSelector(false);
-      }
+    if (!newMessage.trim() || isTyping) return;
+
+    const userMessage: Message = {
+      id: Date.now(),
+      type: 'user',
+      message: newMessage,
+      timestamp: new Date(),
+      mood: currentMood
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setNewMessage('');
+    setIsTyping(true);
+
+    try {
+      const response = await callGeminiAPI([...messages, userMessage], currentMood);
+      addBotMessage(response);
+    } catch (error) {
+      console.error('CHAT ERROR:', error);
+      // Sementara menampilkan error asli untuk debugging.
+      // Kalau sudah jalan, ganti dengan pesan ramah.
+      addBotMessage(`ERROR: ${error instanceof Error ? error.message : String(error)}`);
+    } finally {
+      setIsTyping(false);
+      setShowMoodSelector(false);
     }
   };
 
@@ -285,10 +200,10 @@ export default function MentalHealthChatbot() {
   const handleMoodSelection = async (mood: string) => {
     setCurrentMood(mood);
     setShowMoodSelector(false);
-    
+
     const selectedMoodOption = moodOptions.find(option => option.value === mood);
     const moodMessage = `I'm feeling ${selectedMoodOption?.label.toLowerCase()} today ${selectedMoodOption?.emoji}`;
-    
+
     const userMessage: Message = {
       id: Date.now(),
       type: 'user',
@@ -296,29 +211,16 @@ export default function MentalHealthChatbot() {
       timestamp: new Date(),
       mood: mood
     };
-    
+
     setMessages(prev => [...prev, userMessage]);
     setIsTyping(true);
-    
+
     try {
-      const response = await callGeminiAPI(moodMessage, mood);
-      
-      const botMessage: Message = {
-        id: Date.now() + 1,
-        type: 'bot',
-        message: response,
-        timestamp: new Date()
-      };
-      
-      setMessages(prev => [...prev, botMessage]);
+      const response = await callGeminiAPI([...messages, userMessage], mood);
+      addBotMessage(response);
     } catch (error) {
-      const errorMessage: Message = {
-        id: Date.now() + 1,
-        type: 'bot',
-        message: "I'm here to support you, though I'm having a technical moment. Your feelings are valid and important. Please try again, or reach out to our crisis support if you need immediate help.",
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, errorMessage]);
+      console.error('CHAT ERROR:', error);
+      addBotMessage(`ERROR: ${error instanceof Error ? error.message : String(error)}`);
     } finally {
       setIsTyping(false);
     }
@@ -326,7 +228,7 @@ export default function MentalHealthChatbot() {
 
   const handleEmergencyContact = () => {
     const message = "Hi, I need mental health crisis support. Please help me.";
-    const phoneNumber = "6281234567890"; // Replace with actual crisis support number
+    const phoneNumber = "6281234567890"; // Ganti dengan nomor crisis support yang asli
     const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappURL, '_blank');
   };
@@ -400,7 +302,7 @@ export default function MentalHealthChatbot() {
             </div>
           )}
 
-          {/* Chat Messages - Smaller Height */}
+          {/* Chat Messages */}
           <div className="h-48 md:h-64 overflow-y-auto p-4 md:p-6 space-y-4">
             {messages.map((message) => (
               <div
@@ -411,8 +313,8 @@ export default function MentalHealthChatbot() {
                   message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''
                 }`}>
                   <div className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                    message.type === 'user' 
-                      ? 'bg-gradient-to-r from-indigo-600 to-purple-600' 
+                    message.type === 'user'
+                      ? 'bg-gradient-to-r from-indigo-600 to-purple-600'
                       : 'bg-gradient-to-r from-purple-600 to-pink-600'
                   }`}>
                     {message.type === 'user' ? (
@@ -434,7 +336,7 @@ export default function MentalHealthChatbot() {
                 </div>
               </div>
             ))}
-            
+
             {isTyping && (
               <div className="flex justify-start">
                 <div className="flex items-start space-x-2">
@@ -444,8 +346,8 @@ export default function MentalHealthChatbot() {
                   <div className="bg-gray-100 p-3 rounded-2xl border">
                     <div className="flex space-x-1">
                       <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -476,7 +378,7 @@ export default function MentalHealthChatbot() {
                 type="text"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                 placeholder="Type your message here..."
                 className="flex-1 p-3 border bg-white border-white rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-600 text-sm md:text-base"
               />
@@ -491,7 +393,7 @@ export default function MentalHealthChatbot() {
           </div>
         </div>
 
-        {/* Resources Section - Below Chat */}
+        {/* Resources Section */}
         <div className="space-y-6">
           {/* Self-Care Tips */}
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-4 md:p-6">
@@ -547,7 +449,7 @@ export default function MentalHealthChatbot() {
                   <h4 className="font-medium text-gray-900 text-sm md:text-base">{group.title}</h4>
                   <p className="text-purple-600 text-xs md:text-sm font-medium">{group.time}</p>
                   <p className="text-gray-600 text-xs md:text-sm mt-1">{group.description}</p>
-                  <button 
+                  <button
                     onClick={() => handleResourceClick(group.link)}
                     className="mt-2 bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-xs md:text-sm hover:bg-blue-200 transition-colors inline-flex items-center"
                   >
@@ -574,7 +476,7 @@ export default function MentalHealthChatbot() {
                     <span className="text-purple-600 text-xs font-medium">{resource.type}</span>
                     <span className="text-gray-500 text-xs">{resource.readTime}</span>
                   </div>
-                  <button 
+                  <button
                     onClick={() => handleResourceClick(resource.link)}
                     className="mt-3 w-full bg-purple-100 text-purple-700 py-2 rounded-lg text-xs md:text-sm hover:bg-purple-200 transition-colors inline-flex items-center justify-center"
                   >
@@ -597,7 +499,7 @@ export default function MentalHealthChatbot() {
               If you're in crisis or having thoughts of self-harm, please reach out immediately. You're not alone.
             </p>
             <div className="space-y-3">
-              <button 
+              <button
                 onClick={handleEmergencyContact}
                 className="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 transition-colors text-sm md:text-base font-medium flex items-center justify-center"
               >
@@ -605,13 +507,13 @@ export default function MentalHealthChatbot() {
                 WhatsApp Crisis Support
               </button>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <button 
+                <button
                   onClick={() => window.open('tel:119', '_self')}
                   className="border-2 border-red-600 text-red-600 py-2 rounded-xl hover:bg-red-50 transition-colors text-sm font-medium"
                 >
                   Crisis Hotline: 119
                 </button>
-                <button 
+                <button
                   onClick={() => handleResourceClick('https://www.into-the-light.id/')}
                   className="border-2 border-red-600 text-red-600 py-2 rounded-xl hover:bg-red-50 transition-colors text-sm font-medium"
                 >

@@ -40,12 +40,12 @@ export const metadata: Metadata = {
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png',
   },
-  manifest: '/manifest.json',
 }
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
+  viewportFit: 'cover',
   themeColor: '#6366f1',
 }
 
@@ -57,15 +57,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* Accessibility enhancements */}
         <meta name="color-scheme" content="light dark" />
         <meta name="format-detection" content="telephone=no" />
-        
-        {/* Preconnect to important domains */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        
-        {/* Additional meta tags for better SEO */}
         <meta name="application-name" content="Lestari" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -73,7 +66,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#6366f1" />
         <meta name="msapplication-tap-highlight" content="no" />
-        
+
         {/* Schema.org structured data */}
         <script
           type="application/ld+json"
@@ -86,26 +79,11 @@ export default function RootLayout({
               url: 'https://Lestari.app',
               applicationCategory: 'EducationalApplication',
               operatingSystem: 'Web',
-              accessibilityFeature: [
-                'visualContent',
-                'textAlternatives',
-                'closedCaptions'
-              ],
+              accessibilityFeature: ['visualContent', 'textAlternatives', 'closedCaptions'],
               accessibilityHazard: 'none',
-              accessibilityControl: [
-                'fullKeyboardControl',
-                'mouseControl',
-                'touchControl'
-              ],
-              offers: {
-                '@type': 'Offer',
-                price: '0',
-                priceCurrency: 'USD'
-              },
-              author: {
-                '@type': 'Organization',
-                name: 'Lestari Team'
-              }
+              accessibilityControl: ['fullKeyboardControl', 'mouseControl', 'touchControl'],
+              offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+              author: { '@type': 'Organization', name: 'Lestari Team' }
             })
           }}
         />
@@ -118,12 +96,12 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        
+
         {/* Main content wrapper */}
-        <div id="main-content" role="main" className="min-h-screen">
+        <div id="main-content" role="main" className="min-h-[100dvh]">
           {children}
         </div>
-        
+
         {/* Accessibility announcement region */}
         <div
           id="announcements"
@@ -131,49 +109,28 @@ export default function RootLayout({
           aria-atomic="true"
           className="sr-only"
         ></div>
-        
-        {/* Loading indicator for better UX */}
+
+        {/* Loading indicator */}
         <div
           id="loading-indicator"
           className="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform scale-x-0 transition-transform duration-300 z-50"
           style={{ transformOrigin: 'left' }}
         ></div>
-        
-        {/* Service worker registration script */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                      console.log('SW registered: ', registration);
-                    })
-                    .catch(function(registrationError) {
-                      console.log('SW registration failed: ', registrationError);
-                    });
-                });
-              }
-            `
-          }}
-        />
-        
+
         {/* Accessibility helper script */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Enhanced keyboard navigation
               document.addEventListener('keydown', function(e) {
                 if (e.key === 'Tab') {
                   document.body.classList.add('keyboard-nav');
                 }
               });
-              
+
               document.addEventListener('mousedown', function() {
                 document.body.classList.remove('keyboard-nav');
               });
-              
-              // Announce page changes to screen readers
+
               function announcePageChange(message) {
                 const announcer = document.getElementById('announcements');
                 if (announcer) {
@@ -183,42 +140,36 @@ export default function RootLayout({
                   }, 1000);
                 }
               }
-              
-              // Reduce motion for users who prefer it
+
               if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 document.documentElement.style.setProperty('--animation-duration', '0.01ms');
                 document.documentElement.style.setProperty('--transition-duration', '0.01ms');
               }
-              
-              // High contrast mode detection
+
               if (window.matchMedia('(prefers-contrast: high)').matches) {
                 document.body.classList.add('high-contrast');
               }
-              
-              // Font size adjustment
+
               function adjustFontSize(increment) {
                 const currentSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
                 const newSize = Math.max(12, Math.min(24, currentSize + increment));
                 document.documentElement.style.fontSize = newSize + 'px';
                 localStorage.setItem('fontSize', newSize);
               }
-              
-              // Load saved font size
+
               const savedFontSize = localStorage.getItem('fontSize');
               if (savedFontSize) {
                 document.documentElement.style.fontSize = savedFontSize + 'px';
               }
-              
-              // Error handling for better UX
+
               window.addEventListener('error', function(e) {
                 console.error('Application error:', e.error);
               });
-              
-              // Online/offline status handling
+
               window.addEventListener('online', function() {
                 announcePageChange('Connection restored');
               });
-              
+
               window.addEventListener('offline', function() {
                 announcePageChange('Connection lost. Some features may be limited.');
               });

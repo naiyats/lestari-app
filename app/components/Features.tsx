@@ -1,10 +1,9 @@
-import React from 'react';
 import { Briefcase, GraduationCap, MessageCircle, Mic } from 'lucide-react';
 
 export const features = [
   {
     id: 'job-portal',
-    icon: <Briefcase className="w-8 h-8" />,
+    icon: Briefcase,
     title: "Job Portal",
     description: "Find deaf-friendly jobs with visual communication support",
     color: "from-blue-500 to-blue-600",
@@ -12,7 +11,7 @@ export const features = [
   },
   {
     id: 'workshop',
-    icon: <GraduationCap className="w-8 h-8" />,
+    icon: GraduationCap,
     title: "Workshop",
     description: "Learn new skills through visual tutorials and sign language",
     color: "from-green-500 to-green-600",
@@ -20,7 +19,7 @@ export const features = [
   },
   {
     id: 'mental-health',
-    icon: <MessageCircle className="w-8 h-8" />,
+    icon: MessageCircle,
     title: "Mental Health Chat",
     description: "AI-powered mental health support with visual assistance",
     color: "from-purple-500 to-purple-600",
@@ -28,7 +27,7 @@ export const features = [
   },
   {
     id: 'speech-to-text',
-    icon: <Mic className="w-8 h-8" />,
+    icon: Mic,
     title: "Speech to Text",
     description: "Convert speech to text for better communication",
     color: "from-red-500 to-red-600",
