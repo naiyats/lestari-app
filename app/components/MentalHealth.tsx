@@ -168,23 +168,21 @@ const resources = [
   }
 ];
 
-// Call Gemini Flash API
+// Call Gemini Flash API with flexible, casual, and friendly personality
 const callGeminiAPI = async (message: string, mood?: string): Promise<string> => {
-  const API_KEY = 'AIzaSyA_8CuvEvGLFkoDL4_MpZPAJtVO5ELhfLY'; // Replace with your actual API key
+  const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || ''; 
   const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
   
-  let systemPrompt = `You are a compassionate AI mental health support companion. Your role is to:
-- Provide empathetic, supportive responses
-- Offer practical coping strategies and self-care tips
-- Validate the user's feelings without judgment
-- Encourage professional help when appropriate
-- Be warm, understanding, and non-clinical in your tone
-- Keep responses conversational and not too long (2-4 sentences usually)
-- Never diagnose or provide medical advice
-- Always prioritize user safety and well-being`;
+  let systemPrompt = `Kamu adalah 'Deafine', teman AI yang hangat, santai, asyik, dan empatik untuk kesehatan mental di portal Lestari.
+Aturan gaya bicaramu:
+- Gunakan bahasa Indonesia sehari-hari yang natural, luwes, santai, dan ramah seperti teman dekat yang siap mendengarkan (jangan pakai bahasa Inggris kecuali user yang minta).
+- Jangan pakai bahasa robot, kuesioner formal, atau gaya bahasa konseling klinis yang kaku.
+- Jawab dengan singkat, padat, dan penuh kepedulian (cukup 2-4 kalimat yang hangat).
+- Validasi perasaan user dengan tulus tanpa menghakimi, dan berikan dukungan semangat yang asyik.
+- Jangan pernah memberikan diagnosis medis.`;
 
   if (mood) {
-    systemPrompt += `\n\nThe user has indicated they are feeling "${mood}" today. Please acknowledge this mood and respond appropriately with empathy and relevant support.`;
+    systemPrompt += `\n\nUser baru saja bilang kalau mood mereka hari ini lagi "${mood}". Sapa dan tanggapi kondisi mood mereka ini dengan santai, hangat, dan penuh empati ya.`;
   }
 
   try {
@@ -196,32 +194,20 @@ const callGeminiAPI = async (message: string, mood?: string): Promise<string> =>
       body: JSON.stringify({
         contents: [{
           parts: [{
-            text: `${systemPrompt}\n\nUser message: "${message}"`
+            text: `${systemPrompt}\n\nPesan dari user: "${message}"`
           }]
         }],
         generationConfig: {
-          temperature: 0.7,
+          temperature: 0.8, // Dibuat sedikit lebih kreatif & luwes
           topK: 40,
           topP: 0.95,
-          maxOutputTokens: 200,
+          maxOutputTokens: 250,
         },
         safetySettings: [
-          {
-            category: "HARM_CATEGORY_HARASSMENT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          },
-          {
-            category: "HARM_CATEGORY_HATE_SPEECH",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          },
-          {
-            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          },
-          {
-            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          }
+          { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+          { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+          { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_MEDIUM_AND_ABOVE" },
+          { category: "HARM_CATEGORY_DANGEROUS_CURRENT", threshold: "BLOCK_MEDIUM_AND_ABOVE" }
         ]
       })
     });
@@ -240,8 +226,8 @@ const callGeminiAPI = async (message: string, mood?: string): Promise<string> =>
   } catch (error) {
     console.error('Error calling Gemini API:', error);
     
-    // Fallback response
-    return "I'm here to support you, though I'm having a technical moment right now. Your feelings are valid and important. Please try again, or if you need immediate help, please reach out to our crisis support resources below.";
+    // Fallback santai kalau misal ada kendala
+    return "Eh, bentar ya koneksiku agak ngadat nih. Tapi intinya aku tetap di sini nemenin kamu kok, cerita aja pelan-pelan ya! Kalau butuh bantuan darurat, cek info krisis di bawah ya.";
   }
 };
 
