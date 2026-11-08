@@ -18,9 +18,9 @@ import {
 } from 'lucide-react';
 
 const steps = [
-  { id: 1, name: 'Pribadi' },
-  { id: 2, name: 'Minat' },
-  { id: 3, name: 'Tujuan' },
+  { id: 1, name: 'Info Pribadi' },
+  { id: 2, name: 'Minat & Keahlian' },
+  { id: 3, name: 'Tujuan Utama' },
   { id: 4, name: 'Ringkasan' }
 ];
 
@@ -103,7 +103,7 @@ export default function AssessmentModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 bg-slate-900/60 flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div className="fixed inset-0 bg-slate-900/60 flex items-center justify-center p-3 sm:p-4 z-50 overflow-y-auto">
           <motion.div 
             ref={modalRef}
             initial={{ opacity: 0, scale: 0.95, y: 15 }} 
@@ -120,39 +120,39 @@ export default function AssessmentModal({
             ) : (
               <>
                 {/* Header Modal */}
-                <header className="px-6 py-4 border-b flex justify-between items-start flex-shrink-0 bg-white sticky top-0 z-10">
+                <header className="px-5 sm:px-6 py-4 border-b flex justify-between items-start flex-shrink-0 bg-white sticky top-0 z-10">
                   <div>
-                    <h2 className="text-lg font-bold text-slate-900">Lengkapi Profil</h2>
-                    <p className="text-xs text-slate-500 mt-0.5">Bantu kami mengenal Anda lebih baik untuk personalisasi layanan.</p>
+                    <h2 className="text-base sm:text-lg font-bold text-slate-900">Lengkapi Profil</h2>
+                    <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5">Bantu kami mengenal Anda lebih baik untuk personalisasi layanan.</p>
                   </div>
                   <button onClick={onClose} className="p-1.5 hover:bg-slate-100 rounded-full transition-colors text-slate-500 hover:text-slate-800">
                     <X size={20} />
                   </button>
                 </header>
 
-                {/* Stepper Header (Diperpendek teksnya agar 1-4 muat pas tanpa terpotong) */}
-                <div className="px-6 py-3 border-b bg-slate-50 flex-shrink-0 sticky top-[73px] z-10">
-                  <div className="flex items-center justify-between max-w-md mx-auto">
+                {/* Stepper Header (Dibuat super rapi dengan indikator step aktif di bawahnya) */}
+                <div className="px-6 py-3 border-b bg-slate-50 flex-shrink-0 sticky top-[69px] sm:top-[73px] z-10">
+                  <div className="flex items-center justify-between max-w-xs mx-auto">
                     {steps.map((s, index) => (
                       <React.Fragment key={s.id}>
-                        <div className="flex items-center space-x-1.5">
-                          <div className={`w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0 transition-colors ${step >= s.id ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-500'}`}>
-                            {step > s.id ? <Check size={12} /> : s.id}
-                          </div>
-                          <span className={`text-xs font-medium whitespace-nowrap ${step >= s.id ? 'text-indigo-600 font-semibold' : 'text-slate-500'}`}>
-                            {s.name}
-                          </span>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0 transition-colors shadow-sm ${step === s.id ? 'bg-indigo-600 text-white ring-4 ring-indigo-100' : step > s.id ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-500'}`}>
+                          {step > s.id ? <Check size={14} /> : s.id}
                         </div>
                         {index < steps.length - 1 && (
-                          <div className={`h-0.5 w-4 sm:w-8 mx-1.5 transition-colors flex-shrink-0 ${step > s.id ? 'bg-indigo-600' : 'bg-slate-200'}`}></div>
+                          <div className={`h-1 w-10 sm:w-16 mx-1 transition-colors flex-shrink-0 rounded-full ${step > s.id ? 'bg-indigo-600' : 'bg-slate-200'}`}></div>
                         )}
                       </React.Fragment>
                     ))}
                   </div>
+                  <div className="text-center mt-2">
+                    <span className="text-xs font-semibold text-indigo-600">
+                      Langkah {step} dari {steps.length}: {steps[step - 1].name}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Modal Body */}
-                <main className="p-6 overflow-y-auto bg-slate-50 flex-grow">
+                <main className="p-5 sm:p-6 overflow-y-auto bg-slate-50 flex-grow">
                   <AnimatePresence mode="wait">
                     <motion.div 
                       key={step} 
@@ -165,7 +165,7 @@ export default function AssessmentModal({
                       {step === 1 && (
                         <div className="space-y-4">
                           <div className="text-center mb-2">
-                            <h3 className="font-bold text-lg text-slate-800">Kenalan dulu yuk! 👋</h3>
+                            <h3 className="font-bold text-base sm:text-lg text-slate-800">Kenalan dulu yuk! 👋</h3>
                           </div>
                           
                           {/* Bagian Upload Foto Profil */}
@@ -229,13 +229,13 @@ export default function AssessmentModal({
 
                           <div>
                             <label className="block text-xs font-semibold text-slate-700 mb-1.5">Preferensi Komunikasi Utama</label>
-                            <div className="grid grid-cols-2 gap-2">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                               {communicationOptions.map(option => (
                                 <button
                                   key={option}
                                   type="button"
                                   onClick={() => setFormData({...formData, communicationPreference: option})}
-                                  className={`p-2 text-xs text-left rounded-lg border font-medium transition-all ${formData.communicationPreference === option ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-300 hover:border-indigo-300 text-slate-700'}`}
+                                  className={`p-2.5 text-xs text-left rounded-lg border font-medium transition-all ${formData.communicationPreference === option ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'bg-white border-slate-300 hover:border-indigo-300 text-slate-700'}`}
                                 >
                                   {option}
                                 </button>
@@ -264,7 +264,7 @@ export default function AssessmentModal({
                       {/* Step 2: Minat & Keahlian */}
                       {step === 2 && (
                         <div>
-                          <h3 className="font-bold text-lg text-slate-800 mb-1">Apa bidang yang paling menarik bagi Anda?</h3>
+                          <h3 className="font-bold text-base sm:text-lg text-slate-800 mb-1">Apa bidang yang paling menarik bagi Anda?</h3>
                           <p className="text-slate-600 text-xs mb-4">Pilih satu atau lebih opsi di bawah ini.</p>
                           <div className="grid grid-cols-2 gap-3">
                             {interestOptions.map(opt => (
@@ -285,7 +285,7 @@ export default function AssessmentModal({
                       {/* Step 3: Tujuan Utama */}
                       {step === 3 && (
                         <div>
-                          <h3 className="font-bold text-lg text-slate-800 mb-1">Apa tujuan utama Anda bergabung?</h3>
+                          <h3 className="font-bold text-base sm:text-lg text-slate-800 mb-1">Apa tujuan utama Anda bergabung?</h3>
                           <p className="text-slate-600 text-xs mb-4">Pilih salah satu yang paling menggambarkan kebutuhan Anda.</p>
                           <div className="grid grid-cols-2 gap-3">
                             {goalOptions.map(opt => (
@@ -306,7 +306,7 @@ export default function AssessmentModal({
                       {/* Step 4: Ringkasan */}
                       {step === 4 && (
                         <div className="space-y-3">
-                          <h3 className="font-bold text-lg text-slate-800">Ringkasan Profil</h3>
+                          <h3 className="font-bold text-base sm:text-lg text-slate-800">Ringkasan Profil</h3>
                           <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-200 space-y-1.5 text-xs text-slate-700 flex flex-col items-center sm:items-start">
                             {formData.profileImage && (
                               <div className="w-14 h-14 rounded-full overflow-hidden mb-2 border border-indigo-300 shadow-sm flex-shrink-0">
@@ -329,7 +329,7 @@ export default function AssessmentModal({
                 </main>
 
                 {/* Footer Modal */}
-                <footer className="px-6 py-4 border-t bg-white flex justify-between items-center flex-shrink-0 sticky bottom-0 z-10">
+                <footer className="px-5 sm:px-6 py-4 border-t bg-white flex justify-between items-center flex-shrink-0 sticky bottom-0 z-10">
                   <button 
                     type="button"
                     onClick={handleBack} 
