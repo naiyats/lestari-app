@@ -53,7 +53,7 @@ export default function Page() {
     setRole('jobseeker');
   };
 
-  // Tampilan Login (Super Rapi di Mobile & Desktop)
+  // Tampilan Login
   if (!isAuthenticated) {
     return (
       <main className="min-h-screen bg-[#EEF2FF] flex items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
@@ -63,14 +63,14 @@ export default function Page() {
         <div className="absolute bottom-5 right-5 w-[350px] sm:w-[450px] h-[350px] sm:h-[450px] bg-pink-300/40 rounded-full blur-[90px] sm:blur-[110px] pointer-events-none"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[650px] h-[500px] sm:h-[650px] bg-indigo-200/30 rounded-full blur-[120px] pointer-events-none"></div>
 
-        {/* Outer Container Glassmorphism (Di Mobile langsung pas di card, di Laptop tampil 2 Kolom) */}
+        {/* Outer Container Glassmorphism */}
         <div className="w-full max-w-md lg:max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 lg:bg-white/40 lg:backdrop-blur-2xl lg:border lg:border-white/60 lg:p-10 lg:rounded-[3rem] lg:shadow-2xl lg:shadow-indigo-500/10">
           
-          {/* SISI KIRI: Branding (HANYA TAMPIL DI DESKTOP / LAPTOP) */}
-          <div className="hidden lg:flex lg:col-span-6 flex-col justify-center lg:pr-6">
+          {/* SISI KIRI: Branding (Desktop) */}
+          <div className="hidden lg:flex lg:col-span-6 flex-col justify-between py-2 lg:pr-6 h-full min-h-[480px]">
             
             {/* Logo Persis Homepage */}
-            <div className="flex items-center space-x-3 mb-6">
+            <div className="flex items-center space-x-3">
               <div className="w-11 h-11 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-md shadow-purple-500/20">
                 <EarOff className="w-6 h-6 text-white" />
               </div>
@@ -80,7 +80,7 @@ export default function Page() {
             </div>
 
             {/* Konten Teks */}
-            <div>
+            <div className="my-auto py-4">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 text-xs font-semibold mb-6 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 100% Deaf-Friendly Platform
@@ -110,147 +110,153 @@ export default function Page() {
                 </div>
               </div>
             </div>
+
+            <div></div>
           </div>
 
           {/* SISI KANAN / UTAMA DI MOBILE: Card Login */}
-          <div className="w-full lg:col-span-6 bg-white/90 backdrop-blur-2xl border border-white/90 rounded-[2.5rem] p-6 sm:p-8 shadow-2xl shadow-indigo-500/10">
+          <div className="w-full lg:col-span-6 flex items-center justify-center">
+            <div className="w-full max-w-md bg-white/95 backdrop-blur-2xl border border-white/90 rounded-[2.5rem] p-6 sm:p-10 shadow-2xl shadow-indigo-500/10">
 
-            {/* Header Logo (Tampil khusus Mobile di atas kata Login) */}
-            <div className="text-center mb-6">
-              <div className="lg:hidden flex items-center justify-center space-x-2.5 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md shadow-purple-500/20">
-                  <EarOff className="w-5 h-5 text-white" />
+              {/* Header Mobile: Logo di Kiri, Judul Login di Tengah */}
+              <div className="mb-6">
+                <div className="lg:hidden flex items-center justify-start space-x-2.5 mb-5">
+                  <div className="w-9 h-9 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md shadow-purple-500/20">
+                    <EarOff className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
+                    Lestari
+                  </span>
                 </div>
-                <span className="text-2xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
-                  Lestari
-                </span>
-              </div>
-              
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                Login
-              </h2>
-              <p className="text-xs text-slate-500 mt-1">
-                {role === 'jobseeker' && 'Masuk untuk menjelajahi portal karir.'}
-                {role === 'company' && 'Masuk untuk mempublikasikan lowongan kerja.'}
-                {role === 'admin' && 'Masuk untuk meninjau & memoderasi loker perusahaan.'}
-              </p>
-            </div>
-
-            {/* Role Selector Tabs (3 Kategori) */}
-            <div className="grid grid-cols-3 bg-slate-100/80 p-1 rounded-2xl mb-6 text-[11px] font-semibold border border-slate-200/50">
-              <button
-                type="button"
-                onClick={() => setRole('jobseeker')}
-                className={`py-2 px-1 text-center rounded-xl transition-all cursor-pointer truncate ${role === 'jobseeker' ? 'bg-white text-indigo-600 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900'}`}
-              >
-                Pencari Kerja
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('company')}
-                className={`py-2 px-1 text-center rounded-xl transition-all cursor-pointer truncate ${role === 'company' ? 'bg-white text-indigo-600 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900'}`}
-              >
-                Perusahaan
-              </button>
-              <button
-                type="button"
-                onClick={() => setRole('admin')}
-                className={`py-2 px-1 text-center rounded-xl transition-all cursor-pointer truncate ${role === 'admin' ? 'bg-white text-indigo-600 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900'}`}
-              >
-                Admin
-              </button>
-            </div>
-
-            <form onSubmit={handleLogin} className="space-y-4">
-
-              {/* Email / Identifier */}
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                  {role === 'company' ? 'Email or Phone' : 'Email Address'}
-                </label>
-
-                <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full rounded-2xl border border-slate-200/80 pl-11 pr-4 py-3.5 text-xs bg-slate-50/50 text-slate-900 focus:bg-white focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 focus:outline-none transition font-medium placeholder-slate-400"
-                    placeholder={role === 'company' ? 'name@company.com / 08xxxx' : 'name@email.com'}
-                  />
+                
+                <div className="text-center">
+                  <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                    Login
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                    {role === 'jobseeker' && 'Masuk untuk menjelajahi portal karir.'}
+                    {role === 'company' && 'Masuk untuk mempublikasikan lowongan kerja.'}
+                    {role === 'admin' && 'Masuk untuk meninjau & memoderasi loker perusahaan.'}
+                  </p>
                 </div>
               </div>
 
-              {/* Password */}
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                    Password
+              {/* Role Selector Tabs (3 Kategori) */}
+              <div className="grid grid-cols-3 bg-slate-100/80 p-1 rounded-2xl mb-6 text-[11px] sm:text-xs font-semibold border border-slate-200/50">
+                <button
+                  type="button"
+                  onClick={() => setRole('jobseeker')}
+                  className={`py-2 px-1 text-center rounded-xl transition-all cursor-pointer truncate ${role === 'jobseeker' ? 'bg-white text-indigo-600 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900'}`}
+                >
+                  Pencari Kerja
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setRole('company')}
+                  className={`py-2 px-1 text-center rounded-xl transition-all cursor-pointer truncate ${role === 'company' ? 'bg-white text-indigo-600 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900'}`}
+                >
+                  Perusahaan
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setRole('admin')}
+                  className={`py-2 px-1 text-center rounded-xl transition-all cursor-pointer truncate ${role === 'admin' ? 'bg-white text-indigo-600 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900'}`}
+                >
+                  Admin
+                </button>
+              </div>
+
+              <form onSubmit={handleLogin} className="space-y-4">
+
+                {/* Email / Identifier */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                    {role === 'company' ? 'Email or Phone' : 'Email Address'}
                   </label>
 
-                  <button
-                    type="button"
-                    onClick={() => setModalType('forgot')}
-                    className="text-xs font-semibold text-indigo-600 hover:underline bg-transparent border-none cursor-pointer p-0"
-                  >
-                    Forgot password?
-                  </button>
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <input
+                      type="text"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full rounded-2xl border border-slate-200/80 pl-11 pr-4 py-3.5 text-xs sm:text-sm bg-slate-50/50 text-slate-900 focus:bg-white focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 focus:outline-none transition font-medium placeholder-slate-400"
+                      placeholder={role === 'company' ? 'name@company.com / 08xxxx' : 'name@email.com'}
+                    />
+                  </div>
                 </div>
 
-                <div className="relative">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    className="w-full rounded-2xl border border-slate-200/80 pl-11 pr-4 py-3.5 text-xs bg-slate-50/50 text-slate-900 focus:bg-white focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 focus:outline-none transition font-medium placeholder-slate-400"
-                    placeholder="••••••••"
-                  />
+                {/* Password */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                      Password
+                    </label>
+
+                    <button
+                      type="button"
+                      onClick={() => setModalType('forgot')}
+                      className="text-xs font-semibold text-indigo-600 hover:underline bg-transparent border-none cursor-pointer p-0"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
+
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      className="w-full rounded-2xl border border-slate-200/80 pl-11 pr-4 py-3.5 text-xs sm:text-sm bg-slate-50/50 text-slate-900 focus:bg-white focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 focus:outline-none transition font-medium placeholder-slate-400"
+                      placeholder="••••••••"
+                    />
+                  </div>
                 </div>
+
+                {/* Login Button */}
+                <button
+                  type="submit"
+                  className="w-full mt-3 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 py-4 text-white font-bold text-xs sm:text-sm shadow-lg shadow-indigo-600/25 transition transform active:scale-[0.98] flex items-center justify-center space-x-2 group cursor-pointer"
+                >
+                  <span>Sign In to Portal</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+              </form>
+
+              {/* Footer Dynamic Text */}
+              <div className="mt-6 text-center text-xs text-slate-500">
+                {role === 'company' ? (
+                  <>
+                    Do not have an account yet?{' '}
+                    <button
+                      type="button"
+                      onClick={() => setModalType('contact')}
+                      className="font-semibold text-indigo-600 hover:underline bg-transparent border-none cursor-pointer p-0"
+                    >
+                      Register your company
+                    </button>
+                  </>
+                ) : role === 'admin' ? (
+                  <span className="text-slate-400">Protected area. Authorized personnel only.</span>
+                ) : (
+                  <>
+                    Don't have an account yet?{' '}
+                    <button
+                      type="button"
+                      onClick={() => setModalType('contact')}
+                      className="font-semibold text-indigo-600 hover:underline bg-transparent border-none cursor-pointer p-0"
+                    >
+                      Contact Administrator
+                    </button>
+                  </>
+                )}
               </div>
 
-              {/* Login Button */}
-              <button
-                type="submit"
-                className="w-full mt-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 py-4 text-white font-bold text-xs shadow-lg shadow-indigo-600/25 transition transform active:scale-[0.98] flex items-center justify-center space-x-2 group cursor-pointer"
-              >
-                <span>Sign In to Portal</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-
-            </form>
-
-            {/* Footer Dynamic Text */}
-            <div className="mt-6 text-center text-xs text-slate-500">
-              {role === 'company' ? (
-                <>
-                  Do not have an account yet?{' '}
-                  <button
-                    type="button"
-                    onClick={() => setModalType('contact')}
-                    className="font-semibold text-indigo-600 hover:underline bg-transparent border-none cursor-pointer p-0"
-                  >
-                    Register your company
-                  </button>
-                </>
-              ) : role === 'admin' ? (
-                <span className="text-slate-400">Protected area. Authorized personnel only.</span>
-              ) : (
-                <>
-                  Don't have an account yet?{' '}
-                  <button
-                    type="button"
-                    onClick={() => setModalType('contact')}
-                    className="font-semibold text-indigo-600 hover:underline bg-transparent border-none cursor-pointer p-0"
-                  >
-                    Contact Administrator
-                  </button>
-                </>
-              )}
             </div>
-
           </div>
 
         </div>
