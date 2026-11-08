@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ArrowLeft, Menu, X, EarOff } from 'lucide-react';
 
 interface HeaderProps {
@@ -11,18 +11,25 @@ interface HeaderProps {
     title: string;
     page: string;
   }>;
+  onLogout: () => void;
 }
 
-export default function Header({ currentPage, setCurrentPage, features }: HeaderProps) {
+export default function Header({
+  currentPage,
+  setCurrentPage,
+  features,
+  onLogout
+}: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   return (
     <header className="bg-white/85 backdrop-blur-md border-b border-indigo-100 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
+
           {/* Logo & Brand Name */}
           <div className="flex items-center space-x-2">
-            <button 
+            <button
               onClick={() => {
                 setCurrentPage('home');
                 setMobileMenuOpen(false);
@@ -37,41 +44,56 @@ export default function Header({ currentPage, setCurrentPage, features }: Header
               </h1>
             </button>
           </div>
-          
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            <button 
-              onClick={() => setCurrentPage('home')}
-              className={`transition-colors font-medium text-sm cursor-pointer ${
-                currentPage === 'home' 
-                  ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1' 
-                  : 'text-gray-600 hover:text-indigo-600'
-              }`}
-            >
-              Home
-            </button>
-            {features.map((feature) => (
+
+          {/* Desktop Navigation & Logout */}
+          <div className="hidden md:flex items-center gap-8">
+            <nav className="flex items-center space-x-8">
               <button
-                key={feature.id}
-                onClick={() => setCurrentPage(feature.page)}
+                onClick={() => setCurrentPage('home')}
                 className={`transition-colors font-medium text-sm cursor-pointer ${
-                  currentPage === feature.page 
-                    ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1' 
+                  currentPage === 'home'
+                    ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1'
                     : 'text-gray-600 hover:text-indigo-600'
                 }`}
               >
-                {feature.title}
+                Home
               </button>
-            ))}
-          </nav>
 
-          {/* Mobile menu button */}
+              {features.map((feature) => (
+                <button
+                  key={feature.id}
+                  onClick={() => setCurrentPage(feature.page)}
+                  className={`transition-colors font-medium text-sm cursor-pointer ${
+                    currentPage === feature.page
+                      ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1'
+                      : 'text-gray-600 hover:text-indigo-600'
+                  }`}
+                >
+                  {feature.title}
+                </button>
+              ))}
+            </nav>
+
+            {/* Logout Button */}
+            <button
+              onClick={onLogout}
+              className="bg-red-50 text-red-500 border border-red-200 hover:bg-red-100 px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer whitespace-nowrap"
+            >
+              Logout Account
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="text-gray-700 hover:text-indigo-600 transition-colors p-2 cursor-pointer"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
@@ -80,19 +102,21 @@ export default function Header({ currentPage, setCurrentPage, features }: Header
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-gray-100 py-4 bg-white/95 backdrop-blur-lg px-2 rounded-2xl shadow-xl mt-2 mb-4">
             <div className="flex flex-col space-y-3">
-              <button 
+
+              <button
                 onClick={() => {
                   setCurrentPage('home');
                   setMobileMenuOpen(false);
                 }}
                 className={`text-left font-medium px-4 py-2 rounded-xl transition-colors ${
-                  currentPage === 'home' 
-                    ? 'bg-indigo-50 text-indigo-600 font-semibold' 
+                  currentPage === 'home'
+                    ? 'bg-indigo-50 text-indigo-600 font-semibold'
                     : 'text-gray-700 hover:bg-gray-50'
                 }`}
               >
                 Home
               </button>
+
               {features.map((feature) => (
                 <button
                   key={feature.id}
@@ -101,14 +125,15 @@ export default function Header({ currentPage, setCurrentPage, features }: Header
                     setMobileMenuOpen(false);
                   }}
                   className={`text-left font-medium px-4 py-2 rounded-xl transition-colors ${
-                    currentPage === feature.page 
-                      ? 'bg-indigo-50 text-indigo-600 font-semibold' 
+                    currentPage === feature.page
+                      ? 'bg-indigo-50 text-indigo-600 font-semibold'
                       : 'text-gray-700 hover:bg-gray-50'
                   }`}
                 >
                   {feature.title}
                 </button>
               ))}
+
               {currentPage !== 'home' && (
                 <button
                   onClick={() => {
@@ -121,6 +146,18 @@ export default function Header({ currentPage, setCurrentPage, features }: Header
                   <span>Kembali ke Beranda</span>
                 </button>
               )}
+
+              {/* Mobile Logout */}
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onLogout();
+                }}
+                className="text-left text-red-500 bg-red-50 hover:bg-red-100 px-4 py-2 rounded-xl font-medium transition-colors"
+              >
+                Logout Account
+              </button>
+
             </div>
           </div>
         )}
