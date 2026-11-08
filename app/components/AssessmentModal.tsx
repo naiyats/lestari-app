@@ -59,6 +59,7 @@ export default function AssessmentModal({
     phone: '',
     location: '',
     communicationPreference: '',
+    customCommunication: '', // State untuk opsi "Lainnya"
     experienceLevel: '',
     interests: [] as string[],
     primaryGoal: '',
@@ -100,6 +101,12 @@ export default function AssessmentModal({
     }, 2000);
   };
 
+  // Mendapatkan teks preferensi komunikasi akhir
+  const finalCommunicationPreference = 
+    formData.communicationPreference === 'Lainnya' 
+      ? (formData.customCommunication ? `Lainnya (${formData.customCommunication})` : 'Lainnya')
+      : formData.communicationPreference;
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -130,7 +137,7 @@ export default function AssessmentModal({
                   </button>
                 </header>
 
-                {/* Stepper Header (Dibuat super rapi dengan indikator step aktif di bawahnya) */}
+                {/* Stepper Header */}
                 <div className="px-6 py-3 border-b bg-slate-50 flex-shrink-0 sticky top-[69px] sm:top-[73px] z-10">
                   <div className="flex items-center justify-between max-w-xs mx-auto">
                     {steps.map((s, index) => (
@@ -168,7 +175,7 @@ export default function AssessmentModal({
                             <h3 className="font-bold text-base sm:text-lg text-slate-800">Kenalan dulu yuk! 👋</h3>
                           </div>
                           
-                          {/* Bagian Upload Foto Profil */}
+                          {/* Upload Foto Profil */}
                           <div className="flex flex-col items-center justify-center">
                             <div className="relative w-16 h-16 rounded-full overflow-hidden bg-slate-200 border-2 border-indigo-500 flex items-center justify-center shadow-md flex-shrink-0">
                               {formData.profileImage ? (
@@ -227,6 +234,7 @@ export default function AssessmentModal({
                             </div>
                           </div>
 
+                          {/* Preferensi Komunikasi Utama dengan Input "Lainnya" */}
                           <div>
                             <label className="block text-xs font-semibold text-slate-700 mb-1.5">Preferensi Komunikasi Utama</label>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -241,6 +249,23 @@ export default function AssessmentModal({
                                 </button>
                               ))}
                             </div>
+
+                            {/* Tampil input teks jika memilih "Lainnya" */}
+                            {formData.communicationPreference === 'Lainnya' && (
+                              <motion.div 
+                                initial={{ opacity: 0, y: -5 }} 
+                                animate={{ opacity: 1, y: 0 }} 
+                                className="mt-2"
+                              >
+                                <input 
+                                  type="text"
+                                  value={formData.customCommunication}
+                                  onChange={e => setFormData({...formData, customCommunication: e.target.value})}
+                                  placeholder="Tuliskan metode komunikasi pilihanmu..."
+                                  className="w-full p-2.5 text-xs border border-indigo-300 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 outline-none"
+                                />
+                              </motion.div>
+                            )}
                           </div>
 
                           <div>
@@ -316,7 +341,7 @@ export default function AssessmentModal({
                             <p><strong>Nama Lengkap:</strong> {formData.name || '-'}</p>
                             <p><strong>Domisili:</strong> {formData.location || '-'}</p>
                             <p><strong>No. WhatsApp:</strong> {formData.phone || '-'}</p>
-                            <p><strong>Metode Komunikasi:</strong> {formData.communicationPreference || '-'}</p>
+                            <p><strong>Metode Komunikasi:</strong> {finalCommunicationPreference || '-'}</p>
                             <p><strong>Level Pengalaman:</strong> {formData.experienceLevel || '-'}</p>
                             <p><strong>Minat & Keahlian:</strong> {formData.interests.length > 0 ? formData.interests.join(', ') : '-'}</p>
                             <p><strong>Tujuan Utama:</strong> {formData.primaryGoal || '-'}</p>
